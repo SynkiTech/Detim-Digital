@@ -3,13 +3,8 @@ import type { HeroContent } from "../types";
 /** Hero copy for the Grants & Business Consultations site (Master Prompt §7.1). */
 export const grantsHero: HeroContent = {
   headlineSegments: [
-    {
-      text: "I help businesses, startups and organisations like yours ",
-    },
-    { text: "win the funding they need", accent: true },
-    {
-      text: " and build the plan to grow, from first idea to funded project.",
-    },
+    { text: "From vision to " },
+    { text: "funded.", accent: true },
   ],
   subHeading:
     "Applications funders say yes to, budgets that add up, and business plans you can actually run.",

@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Download, Menu, X } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
 import { HireButton } from "@/components/shared/HireButton";
+import { HomeLink } from "@/components/shared/HomeLink";
 
 export type NavLink = { href: string; label: string };
 
@@ -70,7 +70,7 @@ export function SiteNav({ label, links, cvHref }: SiteNavProps) {
           ))}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3">
           <a
             href={cvHref}
             download
@@ -80,12 +80,7 @@ export function SiteNav({ label, links, cvHref }: SiteNavProps) {
             Download CV
           </a>
           <HireButton className="hidden px-5 py-2 text-sm sm:inline-flex" showArrow={false} />
-          <Link
-            href="/"
-            className="hidden text-sm text-paper/70 transition-colors hover:text-accent md:inline-block"
-          >
-            ← Home
-          </Link>
+          <HomeLink />
           <button
             type="button"
             aria-expanded={open}
@@ -160,13 +155,7 @@ export function SiteNav({ label, links, cvHref }: SiteNavProps) {
                   <Download className="size-4" aria-hidden="true" />
                   Download CV
                 </a>
-                <Link
-                  href="/"
-                  onClick={() => setOpen(false)}
-                  className="text-sm text-paper/75"
-                >
-                  ← Home
-                </Link>
+                <HomeLink onNavigate={() => setOpen(false)} />
               </div>
             </div>
         </motion.div>

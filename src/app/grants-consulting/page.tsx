@@ -72,7 +72,7 @@ export default function GrantsConsultingPage() {
             </Reveal>
 
             <Reveal delay={0.05}>
-              <h1 className="font-display text-4xl font-bold leading-[1.06] tracking-tight sm:text-5xl lg:text-6xl">
+              <h1 className="font-display text-5xl font-bold leading-[1.04] tracking-[-0.02em] sm:text-6xl lg:text-7xl">
                 {grantsHero.headlineSegments.map((segment, i) =>
                   segment.accent ? (
                     <span key={i} className="text-accent">
@@ -86,13 +86,13 @@ export default function GrantsConsultingPage() {
             </Reveal>
 
             <Reveal delay={0.12}>
-              <p className="mt-6 max-w-xl font-serif text-xl italic text-paper/80 sm:text-2xl">
+              <p className="mt-7 max-w-xl font-serif text-xl italic leading-relaxed text-paper/80 sm:text-2xl">
                 {grantsHero.subHeading}
               </p>
             </Reveal>
 
-            <Reveal delay={0.18} className="mt-9 flex flex-wrap items-center gap-4">
-              <HireButton magnetic />
+            <Reveal delay={0.18} className="mt-10 flex flex-wrap items-center gap-4">
+              <HireButton magnetic className="px-7 py-3.5" />
               <Link
                 href={grantsHero.ctas.work.href}
                 className="inline-flex items-center gap-2 rounded-full border border-white/20 px-7 py-3.5 font-display text-base font-bold text-paper transition-colors duration-300 hover:border-accent hover:text-accent"
@@ -163,13 +163,13 @@ export default function GrantsConsultingPage() {
 
       {/* 3 — "Sound familiar?" (white) */}
       <section className="w-full bg-paper text-ink">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="Sound familiar?"
             title="If any of this is where you are right now, you're in the right place."
             tone="light"
           />
-          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-12 lg:mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {grantsProblems.items.map((problem, i) => (
               <Reveal
                 as="li"
@@ -204,13 +204,13 @@ export default function GrantsConsultingPage() {
 
       {/* 4 — Services (warm black) */}
       <section id="services" className="w-full scroll-mt-16 bg-ink text-paper">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="Services"
             title="From first idea to funded project — and everything after."
             sub="One piece or the whole journey, always built around what the funder is looking for."
           />
-          <div className="mt-12">
+          <div className="mt-12 lg:mt-14">
             <ServiceCards services={grantsServices} />
           </div>
         </div>
@@ -218,14 +218,14 @@ export default function GrantsConsultingPage() {
 
       {/* 5 — Results (white): verified numbers, proof, credibility */}
       <section id="results" className="w-full scroll-mt-16 bg-paper text-ink">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="Results"
             title="Numbers I can stand behind."
             tone="light"
           />
 
-          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          <ul className="mt-12 lg:mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {grantsStats.map((stat, i) => (
               <Reveal
                 as="li"
@@ -287,13 +287,13 @@ export default function GrantsConsultingPage() {
 
       {/* 6 — Experience (warm black) */}
       <section id="experience" className="w-full scroll-mt-16 bg-ink text-paper">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="Experience"
             title="Work I've done for organisations like yours."
             sub="Open any card to see exactly what I did."
           />
-          <div className="mt-12">
+          <div className="mt-12 lg:mt-14">
             <ExperienceList items={grantsExperience} tone="dark" />
           </div>
         </div>
@@ -308,13 +308,13 @@ export default function GrantsConsultingPage() {
 
       {/* 8 — Testimonials (white) — falls back to verified numbers until real quotes land */}
       <section className="w-full bg-surface text-ink">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="Testimonials"
             title="What clients say."
             tone="light"
           />
-          <div className="mt-12">
+          <div className="mt-12 lg:mt-14">
             <TestimonialsSection
               testimonials={grantsTestimonials}
               siteLabel="Grants & Consultations"
@@ -334,12 +334,12 @@ export default function GrantsConsultingPage() {
 
       {/* 9 — How I work (warm black) */}
       <section className="w-full bg-ink text-paper">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="How I work"
             title="Five steps, start to funded."
           />
-          <div className="mt-12">
+          <div className="mt-12 lg:mt-14">
             <ProcessSteps process={grantsProcess} tone="dark" />
           </div>
         </div>
@@ -354,13 +354,13 @@ export default function GrantsConsultingPage() {
 
       {/* 11 — Portfolio & CV (white) */}
       <section id="portfolio" className="w-full scroll-mt-16 bg-paper text-ink">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="Portfolio & CV"
             title="See it for yourself."
             tone="light"
           />
-          <div className="mt-12">
+          <div className="mt-12 lg:mt-14">
             <PortfolioCards
               driveUrl={grantsMeta.driveUrl}
               driveLabel="See my grants & consultations portfolio"
@@ -375,9 +375,9 @@ export default function GrantsConsultingPage() {
 
       {/* 12 — FAQ (warm black) */}
       <section id="faq" className="w-full bg-ink text-paper">
-        <div className="mx-auto w-full max-w-4xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-4xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading eyebrow="FAQ" title="Straight answers." />
-          <div className="mt-12">
+          <div className="mt-12 lg:mt-14">
             <FaqList items={grantsFaq} tone="dark" />
           </div>
           <Reveal className="mt-10 flex flex-wrap items-center gap-4">

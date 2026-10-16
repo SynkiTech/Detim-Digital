@@ -89,7 +89,7 @@ export function TestimonialsSection({
 
   return (
     <div>
-      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {fallback.tiles.map((tile, i) => (
           <Reveal
             as="li"
@@ -153,7 +153,7 @@ function TestimonialGrid({
   const light = tone === "light";
 
   return (
-    <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((t, i) => (
         <Reveal
           as="li"
@@ -188,7 +188,7 @@ function TestimonialGrid({
           </div>
           <blockquote
             className={cn(
-              "flex-1 text-sm leading-relaxed sm:text-base",
+              "flex-1 text-base leading-relaxed text-pretty sm:text-lg",
               light ? "text-ink/85" : "text-paper/85"
             )}
           >

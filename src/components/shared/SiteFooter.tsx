@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { Linkedin, Mail, MessageCircle } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
 import { Clock } from "@/components/shared/Clock";
 import { AvailabilityBadge } from "@/components/shared/AvailabilityBadge";
+import { HomeLink } from "@/components/shared/HomeLink";
 import { site } from "@/content/site";
 
 /**
@@ -13,7 +13,7 @@ import { site } from "@/content/site";
 export function SiteFooter() {
   return (
     <footer className="border-t border-white/10 bg-ink">
-      <div className="mx-auto w-full max-w-6xl px-6 py-10">
+      <div className="mx-auto w-full max-w-6xl px-6 py-12">
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <Logo variant="dark" />
           <AvailabilityBadge className="font-mono text-xs" />
@@ -48,14 +48,9 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-5">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-6">
           <p className="font-mono text-xs text-paper/40">{site.ui.copyright}</p>
-          <Link
-            href="/"
-            className="text-sm text-paper/70 transition-colors hover:text-accent"
-          >
-            {site.ui.backHome}
-          </Link>
+          <HomeLink variant="quiet" />
         </div>
       </div>
     </footer>

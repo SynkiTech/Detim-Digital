@@ -187,6 +187,22 @@
   body {
     @apply bg-ink text-paper font-sans;
   }
+
+  /* --- Typographic polish (senior pass) ---
+     Balanced headings avoid orphaned single words on multi-line titles;
+     `pretty` gives paragraphs better rag and prevents widows. Both are
+     progressive enhancements — browsers without support just ignore them. */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p,
+  li,
+  blockquote {
+    text-wrap: pretty;
+  }
+
   ::selection {
     background: var(--accent);
     color: var(--black);

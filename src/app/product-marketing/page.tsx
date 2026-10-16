@@ -65,7 +65,7 @@ export default function ProductMarketingPage() {
             </Reveal>
 
             <Reveal delay={0.05}>
-              <h1 className="font-display text-4xl font-bold leading-[1.06] tracking-tight sm:text-5xl lg:text-6xl">
+              <h1 className="font-display text-5xl font-bold leading-[1.04] tracking-[-0.02em] sm:text-6xl lg:text-7xl">
                 {pmHero.headlineSegments.map((segment, i) =>
                   segment.accent ? (
                     <span key={i} className="text-accent">
@@ -79,13 +79,13 @@ export default function ProductMarketingPage() {
             </Reveal>
 
             <Reveal delay={0.12}>
-              <p className="mt-6 max-w-xl font-serif text-xl italic text-paper/80 sm:text-2xl">
+              <p className="mt-7 max-w-xl font-serif text-xl italic leading-relaxed text-paper/80 sm:text-2xl">
                 {pmHero.subHeading}
               </p>
             </Reveal>
 
-            <Reveal delay={0.18} className="mt-9 flex flex-wrap items-center gap-4">
-              <HireButton magnetic />
+            <Reveal delay={0.18} className="mt-10 flex flex-wrap items-center gap-4">
+              <HireButton magnetic className="px-7 py-3.5" />
               <Link
                 href={pmHero.ctas.work.href}
                 className="inline-flex items-center gap-2 rounded-full border border-white/20 px-7 py-3.5 font-display text-base font-bold text-paper transition-colors duration-300 hover:border-accent hover:text-accent"
@@ -156,13 +156,13 @@ export default function ProductMarketingPage() {
 
       {/* 3 — "Sound familiar?" (white) */}
       <section className="w-full bg-paper text-ink">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="Sound familiar?"
             title="If any of these is happening to you, you're in the right place."
             tone="light"
           />
-          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-12 lg:mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {pmProblems.items.map((problem, i) => (
               <Reveal
                 as="li"
@@ -197,13 +197,13 @@ export default function ProductMarketingPage() {
 
       {/* 4 — Services (black) */}
       <section id="services" className="w-full scroll-mt-16 bg-ink text-paper">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="Services"
             title="Everything you need to take your product to market."
             sub="Pick one piece or the whole journey — every service starts from your customer, not from a template."
           />
-          <div className="mt-12">
+          <div className="mt-12 lg:mt-14">
             <ServiceCards services={pmServices} />
           </div>
         </div>
@@ -211,14 +211,14 @@ export default function ProductMarketingPage() {
 
       {/* 5 — Experience (white) */}
       <section id="experience" className="w-full scroll-mt-16 bg-surface text-ink">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="Experience"
             title="Work I've done for businesses like yours."
             sub="Open any card to see exactly what I did."
             tone="light"
           />
-          <div className="mt-12">
+          <div className="mt-12 lg:mt-14">
             <ExperienceList items={pmExperience} tone="light" />
           </div>
         </div>
@@ -233,12 +233,12 @@ export default function ProductMarketingPage() {
 
       {/* 7 — Testimonials (black) — falls back to proof of work until real quotes land */}
       <section id="results" className="w-full scroll-mt-16 bg-ink text-paper">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="Results"
             title="What working together looks like."
           />
-          <div className="mt-12">
+          <div className="mt-12 lg:mt-14">
             <TestimonialsSection
               testimonials={pmTestimonials}
               siteLabel="Product Marketing"
@@ -251,13 +251,13 @@ export default function ProductMarketingPage() {
 
       {/* 8 — How I work (white) */}
       <section className="w-full bg-paper text-ink">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="How I work"
             title="Four steps, no mystery."
             tone="light"
           />
-          <div className="mt-12">
+          <div className="mt-12 lg:mt-14">
             <ProcessSteps process={pmProcess} tone="light" />
           </div>
         </div>
@@ -272,13 +272,13 @@ export default function ProductMarketingPage() {
 
       {/* 10 — Portfolio & CV (white) */}
       <section id="portfolio" className="w-full scroll-mt-16 bg-surface text-ink">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="Portfolio & CV"
             title="See it for yourself."
             tone="light"
           />
-          <div className="mt-12">
+          <div className="mt-12 lg:mt-14">
             <PortfolioCards
               driveUrl={pmMeta.driveUrl}
               driveLabel="See my product marketing portfolio"
@@ -293,9 +293,9 @@ export default function ProductMarketingPage() {
 
       {/* 11 — FAQ (black) */}
       <section id="faq" className="w-full bg-ink text-paper">
-        <div className="mx-auto w-full max-w-4xl px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-4xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading eyebrow="FAQ" title="Questions I hear a lot." />
-          <div className="mt-12">
+          <div className="mt-12 lg:mt-14">
             <FaqList items={pmFaq} tone="dark" />
           </div>
           <Reveal className="mt-10 flex flex-wrap items-center gap-4">
