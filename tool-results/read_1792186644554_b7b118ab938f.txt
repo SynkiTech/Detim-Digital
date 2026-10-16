@@ -1,0 +1,335 @@
+     1→     1→# MASTER BUILD PROMPT (v2): Detim Digital
+     2→     2→
+     3→     3→You are a senior product designer + full-stack engineer. Build a complete, production-grade website for **Detim Digital**, the personal brand of **Oluwadetimi Ajayi**.
+     4→     4→
+     5→     5→The site is **three experiences in one domain**:
+     6→     6→
+     7→     7→1. **Home**: a cinematic landing page with a 3D avatar of Oluwadetimi and two big buttons.
+     8→     8→2. **Product Marketing site**: a full, self-contained website (`/product-marketing`).
+     9→     9→3. **Grant & Business Consultations site**: a full, self-contained website (`/grants-consulting`).
+    10→    10→
+    11→    11→Think **"websites inside a website."** Each skill site has its own navigation, theme shade, copy, services, experience, testimonials, CV and portfolio link. **The two skills never appear together on the same page, except on Home** (see Section 2).
+    12→    12→
+    13→    13→Work in the **phases in Section 11**. After each phase: run `npm run build` and `npm run lint`, fix all errors, summarise in 5 lines or fewer, then **stop and wait for me to say "next"**. Never skip ahead. Never invent facts (Section 12).
+    14→    14→
+    15→    15→---
+    16→    16→
+    17→    17→## 1. Brand brief
+    18→    18→
+    19→    19→- **Brand:** Detim Digital. **Person:** Oluwadetimi Ajayi. Based in Nigeria, works remotely with clients worldwide. Status: **Available for projects**.
+    20→    20→- **Personality:** Premium, bold, confident. Tone sits between formal and friendly.
+    21→    21→- **Voice rule (applies to ALL copy):** write for the **visitor's problem, not for her résumé**. Use plain, customer-centric language. No jargon, no acronyms without a plain explanation, no buzzwords. Each section should make the visitor think, *"That's exactly my problem, and she has solved it before."* Lead with the visitor's situation and the outcome they want, then the service. Short sentences. Concrete nouns. No exclamation marks.
+    22→    22→- **Primary CTAs on every page:** **Hire me** (opens her Calendly inside the site, branded) and **Send a brief** (email).
+    23→    23→- **Inspiration:** https://www.jenniesdigital.com/ . Borrow its *extras and polish* (loader, live local time, availability status, marquee, smooth motion), not its layout or copy.
+    24→    24→
+    25→    25→---
+    26→    26→
+    27→    27→## 2. The exclusivity rule (most important rule in this document)
+    28→    28→
+    29→    29→> **Each skill site is exclusive to its skill. No page, heading, sentence, meta tag, button, FAQ, testimonial, footer line, alt text or file name inside a skill site may mention, hint at or link to the other skill.**
+    30→    30→
+    31→    31→- **Home is the only place both skills appear**, and only as the two CTA buttons plus the headline.
+    32→    32→- Inside a skill site, the only way back is a neutral **"← Home"** link and the Detim Digital logo. No "switch to" links, no cross-promotion, no shared sections.
+    33→    33→- Each skill site has its **own** metadata, OG image, sitemap entry, JSON-LD, CV, Drive link, testimonials and FAQ.
+    34→    34→- **Build an automated guard:** `scripts/check-exclusivity.ts`, run on `prebuild` and in `npm run lint`. It scans (a) `content/product-marketing/**`, `content/grants/**`, (b) the route folders `app/product-marketing/**` and `app/grants-consulting/**`, and (c) the prerendered HTML text of those routes. The build **fails** if a forbidden term appears (case-insensitive, whole-word):
+    35→    35→  - **Inside Product Marketing**, forbidden: `grant`, `grants`, `funding`, `funder`, `fundraising`, `proposal`, `nonprofit`, `non-profit`, `NGO`, `SBIR`, `STTR`, `NSF`, `NIH`, `USAID`, `SBA`, `business plan`, `trademark`, `consultation`, `consultations`.
+    36→    36→  - **Inside Grants & Business Consultations**, forbidden: `product marketing`, `PMM`, `go-to-market`, `GTM`, `positioning`, `SaaS`, `Meta ads`, `ad set`, `ICP`, `persona`, `personas`, `landing page`.
+    37→    37→  - Print the file, line and term for each violation.
+    38→    38→- Company/role names must follow the **`displayName` / `displayTitle`** fields in the content files (Section 8) so a skill site can show a neutral version of a name or title that would otherwise contain the other skill's word.
+    39→    39→
+    40→    40→---
+    41→    41→
+    42→    42→## 3. Design system: orange, black, white
+    43→    43→
+    44→    44→**Rules:** solid, bold colours. **Only orange, black and white**, in different shades. Not too many colours. **Every page must contain a clear touch of all three.** Guideline: ~70% black and white surfaces, ~15–20% orange accent. Alternate full-width **black** and **white** sections for rhythm; orange is used for buttons, key words in headlines, icons, numbers, underlines, hover states and thin rules.
+    45→    45→
+    46→    46→The two skill sites use **different shades** so each feels like its own world, while sharing the same system.
+    47→    47→
+    48→    48→| Token | Home | Product Marketing ("Ember") | Grants & Consultations ("Rust") |
+    49→    49→|---|---|---|---|
+    50→    50→| `--accent` | `#F25C05` | `#FF5A1F` (bright, vivid orange) | `#D9480F` (deep, burnt orange) |
+    51→    51→| `--accent-deep` | `#C94A00` | `#E14A0F` | `#B23A0A` |
+    52→    52→| `--accent-soft` | `#FFD9C2` | `#FFD9C7` | `#FADCC8` |
+    53→    53→| `--black` | `#0A0A0A` | `#0A0A0A` (pure, sharp black) | `#14100D` (warm charcoal-black) |
+    54→    54→| `--black-2` | `#151515` | `#171717` | `#211A15` |
+    55→    55→| `--white` | `#FFFFFF` | `#FFFFFF` | `#FFFFFF` |
+    56→    56→| `--gray` (light section bg) | `#F5F4F2` | `#F4F4F2` | `#F6F3F0` |
+    57→    57→
+    58→    58→- Scope the tokens with a class on each layout root: `.theme-home`, `.theme-pmm`, `.theme-grants`. Map them into Tailwind (`bg-accent`, `text-black`, etc.).
+    59→    59→- **Contrast (WCAG AA is required):** on the bright PMM orange use **black text** for buttons and small text, not white. On the deeper Grants orange, white text is acceptable. Verify every pairing; if one fails, adjust the shade, never the rule.
+    60→    60→- No gradients of other hues. Gradients allowed only between orange shades, or black → transparent, for cinematic depth.
+    61→    61→- No dark/light theme toggle. The black/white section rhythm replaces it.
+    62→    62→
+    63→    63→**Typography** (`next/font/google`):
+    64→    64→- **Headlines:** **Bricolage Grotesque**, 700–800, tight tracking, very large (hero roughly 56–120px, fluid with `clamp()`).
+    65→    65→- **Sub-headings and accent lines:** **Instrument Serif** (italic where it reads well). This is the "different font" for the sub-heading under the Home headline.
+    66→    66→- **Body/UI:** **Inter**. **Small labels / loader / status:** **JetBrains Mono**.
+    67→    67→
+    68→    68→**Shape & motion:** large radii on cards (20–28px), hairline borders, hard bold buttons (pill, solid fill, arrow icon), subtle film grain overlay. Motion is smooth, confident, cinematic: ease-out, 400–900ms, staggered. **Respect `prefers-reduced-motion`** everywhere.
+    69→    69→
+    70→    70→**Logo:** inline SVG wordmark: bold **"D" monogram** in orange inside a black rounded square + "Detim" (Bricolage, heavy) + "Digital" (Inter, light). Variants for black and white backgrounds. Favicon `app/icon.svg` + Apple touch icon.
+    71→    71→
+    72→    72→---
+    73→    73→
+    74→    74→## 4. Tech stack & setup
+    75→    75→
+    76→    76→- **Next.js (latest stable, App Router) + TypeScript + Tailwind CSS**.
+    77→    77→- **Framer Motion**, **Lenis** (smooth scroll), **lucide-react**, **react-calendly**, **zod + react-hook-form**, **@vercel/analytics**, **@vercel/speed-insights**. For the optional real-3D avatar: **three**, **@react-three/fiber**, **@react-three/drei** (dynamically imported only on Home).
+    78→    78→- ESLint + Prettier, strict TypeScript, no `any`.
+    79→    79→- Route structure (each skill site has its **own layout** with its own nav, footer, theme class, Calendly modal and metadata):
+    80→    80→  ```
+    81→    81→  app/
+    82→    82→    layout.tsx                     root: fonts, analytics, loader mount
+    83→    83→    page.tsx                       HOME
+    84→    84→    product-marketing/
+    85→    85→      layout.tsx  page.tsx  book/page.tsx
+    86→    86→    grants-consulting/
+    87→    87→      layout.tsx  page.tsx  book/page.tsx
+    88→    88→    api/brief/route.ts
+    89→    89→    not-found.tsx  sitemap.ts  robots.ts
+    90→    90→  components/
+    91→    91→    shared/   Loader, Cursor, SmoothScroll, Marquee, Magnetic, CalendlyModal, BriefForm, Clock, AvailabilityBadge, Testimonials, ExperienceCard, ServiceCard, StatCounter, CTA band
+    92→    92→    home/     CinematicBackground, Avatar3D (+ fallback), HeroCTAs
+    93→    93→    pmm/ grants/   site-specific wrappers only
+    94→    94→  content/
+    95→    95→    site.ts                        contact, links, availability (neutral, non-skill data only)
+    96→    96→    home.ts
+    97→    97→    product-marketing/  *.ts
+    98→    98→    grants/             *.ts
+    99→    99→  scripts/check-exclusivity.ts
+   100→   100→  public/ avatar/, images/, resumes/, og/
+   101→   101→  ```
+   102→   102→- **All copy lives in `/content`**, never hard-coded in components, so text can be edited without touching layout.
+   103→   103→- Env vars (`.env.example`): `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_CALENDLY_URL`, `CONTACT_TO_EMAIL`, `RESEND_API_KEY` (optional), `NEXT_PUBLIC_AVATAR_3D` (optional, `true` to enable the GLB model).
+   104→   104→- Deploy target: **Vercel free tier**. Use nothing that needs a paid plan. No domain yet: use `NEXT_PUBLIC_SITE_URL` everywhere so it can be swapped later.
+   105→   105→
+   106→   106→---
+   107→   107→
+   108→   108→## 5. HOME (`/`): the cinematic landing page
+   109→   109→
+   110→   110→A single, full-screen, unforgettable first impression. **No scrolling content**, only the experience below (plus a slim footer strip).
+   111→   111→
+   112→   112→### 5.1 Content
+   113→   113→- **Headline (H1, Bricolage Grotesque, huge, with "Tech Product Marketer" and "Grant Expert" highlighted in orange):**
+   114→   114→  **"Hi, I'm Oluwadetimi Ajayi, a Tech Product Marketer and a Grant Expert."**
+   115→   115→- **Sub-heading (Instrument Serif, italic, large):**
+   116→   116→  *"How can I help your business today?"*
+   117→   117→- **Two CTAs** (large, solid, bold, side by side on desktop, stacked on mobile; each with an arrow and a one-line helper beneath it):
+   118→   118→  1. **Product Marketing** (solid orange, black text). Helper: "Take your product to market."
+   119→   119→  2. **Grant & Business Consultations** (solid white, black text, orange arrow; on hover fills orange). Helper: "Win funding. Plan your growth."
+   120→   120→- **Footer strip** (small, mono): `🟢 Available for projects` · live Lagos time (`Africa/Lagos`) · email · WhatsApp · LinkedIn icons.
+   121→   121→
+   122→   122→### 5.2 The 3D avatar
+   123→   123→- **Asset I will supply:** `/public/avatar/detim-avatar.png` (transparent PNG/WebP, ~1600×2000, a **3D-style render of her photo**, head-and-shoulders). Optional: `/public/avatar/detim-avatar.glb` and `/public/avatar/detim-backdrop.jpg`.
+   124→   124→- **Until the assets exist**, render a stylised placeholder bust (SVG) so layout and animation can be built and reviewed. Make swapping the file the only step needed later. Use `next/image` with `priority`.
+   125→   125→- **Tier 1 (build this first, always works): "2.5D" avatar.**
+   126→   126→  - CSS 3D: `perspective` wrapper; the avatar **tilts toward the cursor** (max ~8°) with spring smoothing; on mobile use device orientation if permitted, else a slow automatic sway.
+   127→   127→  - Idle "breathing" float (translateY ±8px, 6s loop), orange **rim light** (drop-shadow + blurred orange duplicate behind), soft elliptical **ground shadow**.
+   128→   128→  - Layered parallax: avatar, a larger blurred duplicate behind, floating orange shapes in front.
+   129→   129→- **Tier 2 (optional, behind `NEXT_PUBLIC_AVATAR_3D=true`): real 3D.** Load the GLB with `@react-three/fiber` + `drei` (`useGLTF`, `Environment`, soft key + orange rim lights). Head/body gently follows the cursor with limited rotation. Dynamically imported with `ssr: false`; on load failure or low-power devices **fall back to Tier 1**.
+   130→   130→- Layout: desktop = headline left, avatar right and overlapping the background; mobile = avatar on top, text below. Headline never overlaps her face.
+   131→   131→- Entrance: avatar rises and settles; headline **reveals word by word** with a mask; sub-heading fades in last; CTAs slide up.
+   132→   132→
+   133→   133→### 5.3 The cinematic animated background (made from her avatar picture)
+   134→   134→Layered, GPU-friendly, **no heavy video required**:
+   135→   135→1. **Base:** near-black.
+   136→   136→2. **Backdrop layer:** an **enlarged, blurred, duotone (black + orange) copy of the avatar** (use `detim-backdrop.jpg` if provided, else derive from the avatar with CSS filters), slow **Ken Burns** drift (scale 1.05→1.2 and slight pan over ~30s, looped).
+   137→   137→3. **Light:** animated orange **volumetric glow** behind the head, slow pulse, plus an **anamorphic lens-flare streak** that sweeps across every ~12 seconds.
+   138→   138→4. **Atmosphere:** lightweight `<canvas>` of ~50 drifting **embers/particles** (orange, varying size/opacity, parallax with cursor). Fewer on mobile; pause when the tab is hidden.
+   139→   139→5. **Film look:** fine **grain** overlay, **vignette**, and **cinematic letterbox bars** that open on first load.
+   140→   140→6. **Camera feel:** whole scene has a subtle slow dolly-in and cursor-driven parallax between layers.
+   141→   141→- Text always stays legible: add a left-side black gradient scrim behind the headline. Verify AA contrast.
+   142→   142→- **Performance guards:** `prefers-reduced-motion` = static backdrop + no particles; `document.hidden` pauses animation; cap devicePixelRatio; target 60fps on mid-range phones; LCP < 2.5s (avatar and fonts preloaded).
+   143→   143→- If I later supply a short looping `/public/video/hero-loop.mp4`, support it as an optional replacement for layers 2–4 (muted, autoplay, loop, playsInline, poster = backdrop).
+   144→   144→
+   145→   145→### 5.4 Entering a skill site
+   146→   146→Clicking a CTA triggers a **cinematic transition**: the avatar scales toward the camera while an orange panel (matching that site's shade) wipes across, then the skill site fades in. ~900ms, skippable, instant under reduced motion. Prefetch both routes.
+   147→   147→
+   148→   148→---
+   149→   149→
+   150→   150→## 6. PRODUCT MARKETING SITE (`/product-marketing`)
+   151→   151→
+   152→   152→Theme: **Ember** (bright orange, pure black, white). **Nothing here mentions the other skill (Section 2).**
+   153→   153→
+   154→   154→**Navigation (sticky):** logo · small label chip "Product Marketing" · Services · Experience · Results · Portfolio · **Hire me** (button) · "← Home". Mobile: full-screen menu. A **"Download CV"** link also sits in the nav's secondary slot.
+   155→   155→
+   156→   156→**Page order (single long-scroll landing page, black/white alternating):**
+   157→   157→
+   158→   158→1. **Hero (black).** H1 (Bricolage, orange highlights):
+   159→   159→   **"I help tech, SaaS and AI businesses like yours take their products from idea to a widely adopted market product, and keep setting the pace in the market."**
+   160→   160→   Sub-heading (Instrument Serif): *"Clear positioning, a launch plan that works, and messages your customers actually respond to."*
+   161→   161→   CTAs: **Hire me** · **See my work** · small link "Download my CV". Chips: Tech · SaaS · AI. Her portrait/avatar (smaller) with an orange rim light. Availability badge.
+   162→   162→2. **Marquee strip (orange background, black text):** Positioning · Launch plans · Customer research · Competitor analysis · Pricing · Messaging · Ads · Website audits.
+   163→   163→3. **"Sound familiar?" (white).** Five problem cards, in the visitor's voice:
+   164→   164→   - "People visit your product and can't tell what it does in five seconds."
+   165→   165→   - "You're building fast, but nobody outside your team is talking about it."
+   166→   166→   - "Your launch plan is a list of ideas, not a plan."
+   167→   167→   - "Competitors say the same things you do, and win the deal."
+   168→   168→   - "You're paying for ads and you're not sure who is really responding."
+   169→   169→   Closing line: **"These are fixable. Here's how I fix them."**
+   170→   170→4. **Services (black).** Cards, each with: plain title, **"The problem it solves"** (one line), **"What you get"** (one line). Full list:
+   171→   171→   1. **Positioning & messaging.** *Problem:* customers can't tell why you're different. *You get:* one clear promise and the words to say it everywhere.
+   172→   172→   2. **Go-to-market (launch) planning.** *Problem:* a launch with no clear plan. *You get:* who to target, what to promise, where to reach them, what to charge and the milestones that prove it's working.
+   173→   173→   3. **Ideal customer & persona profiles.** *Problem:* trying to sell to everyone. *You get:* a sharp picture of the people most likely to buy first.
+   174→   174→   4. **Competitor analysis.** *Problem:* you look like everyone else. *You get:* a side-by-side of features, experience and marketing that shows where you can stand out.
+   175→   175→   5. **Customer research & interviews.** *Problem:* guessing what customers want. *You get:* real conversations turned into clear decisions.
+   176→   176→   6. **Landing page & website copy, plus website review.** *Problem:* visitors leave without acting. *You get:* clearer pages and copy that guides people to the next step.
+   177→   177→   7. **Ad campaign setup (Meta).** *Problem:* ad spend with no direction. *You get:* campaigns and ad sets built around the right audience and message.
+   178→   178→   8. **Pricing input.** *Problem:* unsure what to charge. *You get:* grounded pricing inputs based on your market and customers.
+   179→   179→   9. **Market research, sizing & channel strategy.** *Problem:* not sure how big the opportunity is or where to focus. *You get:* a clear view of your market and the channels worth your effort.
+   180→   180→5. **Experience / "Work I've done for businesses like yours" (white).** Expandable cards (accordion or drawer, no separate pages). Each card: **job title · company · dates**, a one-line plain-language summary, then **"What I did for them"** bullets. Use only these (from her CV):
+   181→   181→   - **Product Marketing Manager & Strategist, Pryce (Synkitech), 2026.** *Summary:* helped an early-stage software and automation product explain itself clearly and prepare to launch. *Did:* wrote the positioning and landing page copy; built the launch plan; set up Meta ad campaigns; ran customer interviews; contributed pricing inputs.
+   182→   182→   - **Go-to-Market & Business Strategy Developer, Zenith, 2023 to present.** *(Use `displayName: "Zenith"` and `displayTitle: "Go-to-Market Strategy Developer"`.)* *Summary:* helped startups in tech, health, education and sustainability decide who to sell to, what to promise and how to launch. *Did:* sized markets; segmented customers; audited competitors' features; built go-to-market strategies covering value propositions, channels, pricing and measurable launch milestones.
+   183→   183→   - **Go-to-Market & Positioning (portfolio project), JapaLearn, 2025.** *Did:* talked to real users; built ideal customer profiles and personas; reviewed the web app's messaging; mapped first target segments; built Meta ad sets aligned to the positioning.
+   184→   184→   - **Competitor Analysis (portfolio project), OPay vs. Moniepoint, 2025.** *Did:* compared the user experience, features and marketing of two leading fintech apps to show where each can stand out.
+   185→   185→   Label portfolio projects honestly as "Portfolio project".
+   186→   186→6. **CTA band #1 (orange, black text), placed right after Experience:** *"Want results like these for your product?"* **Hire me** · **Send a brief**.
+   187→   187→7. **Testimonials (black).** See Section 9.
+   188→   188→8. **How I work (white):** **Understand → Position → Plan → Launch & learn**, each with a 1–2 line plain-language description.
+   189→   189→9. **CTA band #2 (black with orange headline):** *"Let's get your product the attention it deserves."* **Hire me** · **Send a brief**.
+   190→   190→10. **Portfolio & CV (white).** Two large cards: **"See my product marketing portfolio"** (opens the PMM Drive folder in a new tab) and **"Download my CV"** (PMM CV PDF, file size shown).
+   191→   191→11. **FAQ (black).** 5–6 customer-voice questions: *How do we start? How long does a project take? Do you work with early-stage teams? Can you work with my team remotely? What should I send in a brief? How is pricing decided?* Answers honest and general; pricing = custom, shared after a short call.
+   192→   192→12. **Footer (black):** logo, availability badge, live Lagos time, email, WhatsApp, LinkedIn, "← Home", © line. **Nothing about other services.**
+   193→   193→
+   194→   194→---
+   195→   195→
+   196→   196→## 7. GRANT & BUSINESS CONSULTATIONS SITE (`/grants-consulting`)
+   197→   197→
+   198→   198→Theme: **Rust** (deep burnt orange, warm charcoal-black, white). **Nothing here mentions the other skill (Section 2).** Same structure and quality as Section 6, with its own look and copy.
+   199→   199→
+   200→   200→**Navigation (sticky):** logo · label chip "Grant & Business Consultations" · Services · Experience · Results · Portfolio · **Hire me** · "← Home" · "Download CV".
+   201→   201→
+   202→   202→**Page order:**
+   203→   203→
+   204→   204→1. **Hero (warm black).** H1:
+   205→   205→   **"I help businesses, startups and organisations like yours win the funding they need and build the plan to grow, from first idea to funded project."**
+   206→   206→   Sub-heading (Instrument Serif): *"Applications funders say yes to, budgets that add up, and business plans you can actually run."*
+   207→   207→   CTAs: **Hire me** · **See my work** · small link "Download my CV". Chips: Startups · Small businesses · Nonprofits. Portrait/avatar with rim light. Availability badge.
+   208→   208→2. **Marquee (orange):** Grant research · Applications · Budgets · Reviews · Reporting · Market research · Business plans · Trademark search.
+   209→   209→3. **"Sound familiar?" (white).** Problem cards:
+   210→   210→   - "You found a grant but you're not sure you qualify."
+   211→   211→   - "Your last application was rejected, with little explanation."
+   212→   212→   - "The budget requirements are confusing and the deadline is close."
+   213→   213→   - "You have a strong idea but no plan a funder or investor would take seriously."
+   214→   214→   - "You don't have the time to write it all yourself."
+   215→   215→   Closing line: **"You don't have to do this alone. Here's how I help."**
+   216→   216→4. **Services (warm black).** Each card: plain title, **"The problem it solves"**, **"What you get"**. Full list (the services the owner specified):
+   217→   217→   1. **Grant research.** *Problem:* not knowing which funding fits you. *You get:* a shortlist of funders whose priorities match your work, with deadlines and fit notes.
+   218→   218→   2. **Proposal development.** *Problem:* a blank page and a tight deadline. *You get:* a complete, persuasive application written around what the funder is looking for.
+   219→   219→   3. **Budget making.** *Problem:* numbers that don't add up or don't match the plan. *You get:* a clear, defensible budget with the justification funders expect.
+   220→   220→   4. **Grant review.** *Problem:* not knowing if your draft is strong enough. *You get:* your draft scored against the funder's own criteria, with specific fixes before you submit.
+   221→   221→   5. **Monitoring & reporting.** *Problem:* winning the grant, then struggling to track results and report. *You get:* simple tracking of your outcomes and clear reports that keep funders confident.
+   222→   222→   6. **Market research.** *Problem:* guessing how big the need or opportunity is. *You get:* evidence about your market and customers to back up your plans and applications.
+   223→   223→   7. **Business plan.** *Problem:* an idea without a roadmap. *You get:* a complete, realistic plan covering your market, customers, strengths and weaknesses, and goals you can measure.
+   224→   224→   8. **Trademark search.** *Problem:* investing in a name or logo that someone already owns. *You get:* a check on whether your name or logo is available before you build on it. *(Owner to confirm scope and any disclaimer; keep wording neutral and do not imply legal advice.)*
+   225→   225→5. **Results (white). Verified numbers only, count-up on view:** `100+` applications written or reviewed · `80%` award rate · `100%` client satisfaction · `$5K to $1M+` in funding requests handled · `60+` applications supported through partner firms. Plus two proof lines: "Contributed critical revisions to a seven-figure federal award." and "Helped youth organisations and women-owned businesses secure funding." Small credibility strip: **Member, Grant Professionals Association** · **Grant Writing & Nonprofit Management certificate (YALI, 2024)** · **Program Evaluation certificate (2023)**. Funders covered (small, secondary): US federal programmes (SBIR/STTR, NSF, NIH, USAID, SBA), foundations and corporate funders; sectors: health, technology, education, environment.
+   226→   226→6. **Experience / "Work I've done for businesses like yours" (warm black).** Expandable cards. Use only these (from her résumé):
+   227→   227→   - **Director of Grant Writing, Zenith Grant Consults, 2023 to present.** *Summary:* leads research, interviews and writing for a consulting firm's funding applications. *Did:* researched funder priorities; interviewed clients to find their strongest story; wrote, edited and reviewed 100+ applications for requests from $5K to $1M+; built narratives, budgets, justifications and results frameworks; ran mock reviews scored against agency criteria; mentors junior writers.
+   228→   228→   - **Contract Grant Writer & Reviewer (confidential partner firms), 2024 to present.** *Summary:* works behind the scenes for consultants, firms and government contractors. *Did:* delivered applications to federal, foundation and corporate programmes under partner brands; reviewed drafts and gave practical fixes; contributed to 60+ applications with an 80% success rate. **Never name partners.**
+   229→   229→   - **Founder & Lead Grant Writer, Alpha Grants, 2025 to present.** *Summary:* independent funding support for nonprofits, tech ventures and eco-sustainability initiatives. *Did:* wrote clear narratives and results frameworks that match what funders want to fund.
+   230→   230→   - **Business Strategy Developer, Zenith Grant Consults, 2023 to present.** *(Use `displayTitle: "Business Strategy Developer"`; do not show "go-to-market".)* *Summary:* helped startups in tech, health, education and sustainability turn ideas into complete business plans. *Did:* built full business plans; sized markets; grouped customers into clear segments; ran founder strengths-and-weaknesses sessions.
+   231→   231→7. **CTA band #1 (orange, white text), right after Experience:** *"Have a grant to win or a plan to build?"* **Hire me** · **Send a brief**.
+   232→   232→8. **Testimonials (white).** Section 9.
+   233→   233→9. **How I work (warm black):** **Discover → Match → Write → Review → Submit & follow through**, each in 1–2 plain lines.
+   234→   234→10. **CTA band #2 (white with orange headline).** *"Let's get your funding application, or your plan, ready."* **Hire me** · **Send a brief**.
+   235→   235→11. **Portfolio & CV (white):** **"See my grants & consultations portfolio"** (opens the Grants Drive folder in a new tab) and **"Download my CV"** (Grant Writer resume PDF, file size shown).
+   236→   236→12. **FAQ (warm black).** 5–6 questions: *Can you guarantee we'll win? (No one can honestly guarantee funding. Say so, then explain the 80% award rate, the review step and how drafts are checked against the funder's criteria.) How do I know which grants fit me? How early should I start? Can you review a draft I already wrote? What do you need from me? How is pricing decided? Do you help after we win?*
+   237→   237→13. **Footer (warm black):** same neutral structure as Section 6.
+   238→   238→
+   239→   239→---
+   240→   240→
+   241→   241→## 8. Content data model (`/content`)
+   242→   242→
+   243→   243→`content/site.ts` holds **neutral data only** (no skill-specific wording):
+   244→   244→```ts
+   245→   245→export const site = {
+   246→   246→  name: "Detim Digital",
+   247→   247→  person: "Oluwadetimi Ajayi",
+   248→   248→  email: "oluwadetimiajayi@gmail.com",
+   249→   249→  phone: "+234 813 075 5869",
+   250→   250→  whatsapp: "https://wa.me/2348130755869",
+   251→   251→  linkedin: "https://linkedin.com/in/detimi",
+   252→   252→  calendly: "https://calendly.com/oluwadetimiajayi/30min",
+   253→   253→  location: "Nigeria (working remotely worldwide)",
+   254→   254→  timezone: "Africa/Lagos",
+   255→   255→  available: true,
+   256→   256→};
+   257→   257→```
+   258→   258→`content/product-marketing/` and `content/grants/` each contain: `meta.ts` (title, description, OG text, drive URL, CV path), `hero.ts`, `problems.ts`, `services.ts`, `experience.ts`, `process.ts`, `faq.ts`, `testimonials.ts`, `stats.ts` (grants only).
+   259→   259→
+   260→   260→Per-site **drive and CV links**:
+   261→   261→- Product Marketing → Drive: `https://drive.google.com/drive/folders/14sqCI0VsvEp9mQFbfvrb5XEMRz7TzHcR` · CV: `/resumes/Oluwadetimi-Ajayi-Product-Marketing-Manager-CV.pdf`
+   262→   262→- Grants & Consultations → Drive: `https://drive.google.com/drive/folders/1jNYW7GIADVzvqzpsHnTnxdXtv8rjHae_` · CV: `/resumes/Oluwadetimi-Ajayi-Grant-Writer-Resume.pdf`
+   263→   263→
+   264→   264→Experience item shape: `{ id, displayTitle, displayName, dates, summary, did: string[], tag?: "Portfolio project" }`. Components render only `display*` fields.
+   265→   265→
+   266→   266→Meta (each site's own):
+   267→   267→- PM title: **"Product Marketing for Tech, SaaS & AI Businesses | Oluwadetimi Ajayi"**
+   268→   268→- Grants title: **"Grant Writing, Business Plans & Funding Support | Oluwadetimi Ajayi"**
+   269→   269→- Home title: **"Detim Digital | Oluwadetimi Ajayi"**
+   270→   270→- Descriptions written in the same customer-centric voice, exclusive to each skill.
+   271→   271→
+   272→   272→---
+   273→   273→
+   274→   274→## 9. Testimonials (do this carefully)
+   275→   275→
+   276→   276→- Build a polished testimonials section on **each** skill site (black/white, orange quote marks, name, role, company, optional photo, optional link to the source such as a LinkedIn recommendation).
+   277→   277→- Data lives in `content/<site>/testimonials.ts`: `{ quote, name, role, company, photo?, sourceUrl?, verified: boolean }`.
+   278→   278→- **Never invent testimonials, names or quotes.** In production, render only entries with `verified: true`. If none exist yet, **replace the section with a "Proof of work" strip** (Product Marketing: the four experience highlights as short result tiles; Grants: the verified numbers) and print a build warning: `TESTIMONIALS MISSING for <site>`.
+   279→   279→- In development only, show clearly labelled `SAMPLE: replace me` cards so the layout can be reviewed.
+   280→   280→- The owner will collect real quotes (client messages, LinkedIn recommendations, emails). Make adding one a 5-line edit.
+   281→   281→
+   282→   282→---
+   283→   283→
+   284→   284→## 10. Shared features (both skill sites + Home)
+   285→   285→
+   286→   286→**Calendly ("Hire me"):**
+   287→   287→- Every **Hire me** opens a **full-screen branded modal** with the Calendly inline widget for `NEXT_PUBLIC_CALENDLY_URL`, also embedded on each site's `/book` page. Style it to the active site: pass page settings (`backgroundColor`, `textColor`, `primaryColor` = that site's orange; hide event-type details and cookie banner where allowed), a branded frame with logo and heading ("Book a 30-minute call with Oluwadetimi"), skeleton loader, and a fallback link "Open Calendly in a new tab". Append `utm_source=<site>` so I can see which site each booking came from.
+   288→   288→- Esc to close, focus trap, scroll lock; mobile = full-screen sheet. Note in the README that Calendly's free plan limits some branding controls: do the most it allows.
+   289→   289→
+   290→   290→**Send a brief:**
+   291→   291→- A form (name, email, organisation, what you need, timeline, optional budget range, message). Copy and options are **specific to that site only**. Posts to `app/api/brief/route.ts`: if `RESEND_API_KEY` is set, send via Resend to `CONTACT_TO_EMAIL`; otherwise **fall back to a prefilled `mailto:`** so it always works. Email subject prefix `[Product Marketing]` or `[Grants & Consultations]` taken from a hidden `site` field. Honeypot + basic rate limit + zod validation. Success: "Brief received. I'll reply within 1 to 2 working days."
+   292→   292→
+   293→   293→**Extras (from the Jennies Digital inspiration, adapted):**
+   294→   294→1. **Loader:** full-screen black, orange "D" monogram, mono text `DETIM DIGITAL 0%` counting up, then a clean wipe reveal. Once per session, skippable.
+   295→   295→2. **Live Lagos clock + office-hours pill** (`Mon–Fri 9:00–18:00 WAT`: "🟢 Replying today" / "⚪ I'll reply next working day").
+   296→   296→3. **Availability badge** (`🟢 Available for projects`), controlled in `site.ts`.
+   297→   297→4. **Custom cursor** (fine pointers only), **smooth scroll** (Lenis), **scroll progress bar** (orange), **scroll reveals**, **magnetic buttons**, **marquee strips**, **count-up numbers**, **floating Hire me button** on mobile after the hero.
+   298→   298→5. **Branded 404 and error pages**, skeleton loaders.
+   299→   299→
+   300→   300→---
+   301→   301→
+   302→   302→## 11. Build phases (stop after each and wait for "next")
+   303→   303→
+   304→   304→1. **Foundation:** project setup, fonts, the three theme scopes with the exact tokens, logo/favicon, folder structure, empty content files, `.env.example`, README stub, and **`scripts/check-exclusivity.ts` wired into `prebuild` and lint** (it should pass on the empty skeleton).
+   305→   305→2. **Shared engine:** loader, smooth scroll, progress bar, cursor, route transition component, marquee, magnetic button, count-up, clock/availability, shared Calendly modal, brief form + API route (parameterised by site).
+   306→   306→3. **Home:** cinematic background, Tier-1 avatar (placeholder bust until my asset arrives), headline and sub-heading, the two CTAs, footer strip, transitions into each site. Add the Tier-2 GLB path behind the env flag.
+   307→   307→4. **Product Marketing site:** all 12 sections in Section 6, nav/footer, `/book`.
+   308→   308→5. **Grants & Consultations site:** all 13 sections in Section 7, nav/footer, `/book`.
+   309→   309→6. **Testimonials system + Proof-of-work fallback + CV/Drive wiring** on both sites.
+   310→   310→7. **SEO and sharing:** per-site metadata, dynamic OG images in each site's colours, `sitemap.ts`, `robots.ts`, per-site JSON-LD (`Person` + `ProfessionalService`, each with only its own service).
+   311→   311→8. **Quality pass:** accessibility (AA contrast, focus rings, keyboard flows, skip link), performance (Lighthouse mobile: Performance ≥ 90, Accessibility ≥ 95, Best Practices ≥ 95, SEO ≥ 95), responsive checks at 360 / 768 / 1280 / 1920, reduced-motion check, **exclusivity audit** (`npm run check:exclusivity` must pass; also manually read both sites top to bottom for cross-mentions).
+   312→   312→9. **Deploy prep:** final README (setup, env vars, how to edit copy, add a testimonial, swap avatar/GLB, swap domain, deploy on Vercel), Vercel readiness, domain-connection checklist, and a list of anything I still need to supply.
+   313→   313→
+   314→   314→---
+   315→   315→
+   316→   316→## 12. Content rules
+   317→   317→
+   318→   318→- **Use only the facts in this document.** Do not invent clients, testimonials, awards, numbers, logos, partner names, press or case-study results. If something is missing, hide the block or leave a `TODO` in the content file (never in the rendered page).
+   319→   319→- **Never name confidential partner firms.**
+   320→   320→- Keep figures consistent everywhere they appear (Grants site only): **100+ applications, 80% award rate, 100% client satisfaction, $5K to $1M+, 60+ partner applications, one seven-figure federal award contribution.**
+   321→   321→- Plain, confident, customer-centric language. Minimal emoji (only in status pills). Pick one spelling convention (British: "organisation", "programme") and keep it consistent.
+   322→   322→- Every claim must be something she has actually done (Sections 6 and 7 list them).
+   323→   323→
+   324→   324→---
+   325→   325→
+   326→   326→## 13. What I will supply later
+   327→   327→
+   328→   328→- Her **3D-style avatar** (`detim-avatar.png`, optional `.glb` and `detim-backdrop.jpg`) and a clean professional portrait.
+   329→   329→- The two CV PDFs in `public/resumes/` with the exact filenames above.
+   330→   330→- Real **testimonials** (or LinkedIn recommendations to quote).
+   331→   331→- Specific Drive case details if I want deeper write-ups.
+   332→   332→- The domain (to set in `NEXT_PUBLIC_SITE_URL` and connect on Vercel).
+   333→   333→
+   334→   334→**Begin with Phase 1 now.**
+   335→   335→

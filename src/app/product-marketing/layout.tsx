@@ -1,15 +1,27 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Logo } from "@/components/shared/Logo";
+import { SiteNav } from "@/components/shared/SiteNav";
+import { SiteFooter } from "@/components/shared/SiteFooter";
+import { HireModalProvider } from "@/components/shared/HireModalProvider";
+import { FloatingHire } from "@/components/shared/FloatingHire";
 import { pmMeta } from "@/content/product-marketing/meta";
-import { pmHero } from "@/content/product-marketing/hero";
-import { site } from "@/content/site";
+import { pmServices } from "@/content/product-marketing/services";
+import {
+  personJsonLd,
+  professionalServiceJsonLd,
+} from "@/lib/jsonld";
 
 /**
  * Product Marketing site layout — "Ember" theme (Master Prompt §6).
  * This site is exclusive to the product marketing skill; the layout owns
  * the theme scope, sticky nav and neutral footer.
  */
+const NAV_LINKS = [
+  { href: "#services", label: "Services" },
+  { href: "#experience", label: "Experience" },
+  { href: "#results", label: "Results" },
+  { href: "#portfolio", label: "Portfolio" },
+];
+
 export const metadata: Metadata = {
   title: pmMeta.title,
   description: pmMeta.description,
@@ -18,66 +30,47 @@ export const metadata: Metadata = {
     title: pmMeta.title,
     description: pmMeta.description,
     url: "/product-marketing",
-    siteName: site.name,
+    siteName: "Detim Digital",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: pmMeta.title,
+    description: pmMeta.description,
   },
 };
 
 export default function ProductMarketingLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const jsonLd = [
+    personJsonLd(),
+    professionalServiceJsonLd(
+      "Product Marketing — Oluwadetimi Ajayi",
+      pmMeta.description,
+      "/product-marketing",
+      pmServices.map((s) => s.title)
+    ),
+  ];
+
   return (
-    <div className="theme-pmm min-h-screen bg-ink text-paper">
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-ink/85 backdrop-blur">
-        <nav
-          aria-label="Primary"
-          className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-6"
-        >
-          <Logo variant="dark" />
-          <span className="hidden rounded-full border border-accent/40 px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-accent sm:inline-block">
-            {pmMeta.label}
-          </span>
-          <div className="flex items-center gap-4">
-            <Link
-              href={pmHero.ctas.hire.href}
-              className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-accent-foreground transition-colors duration-300 hover:bg-accent-deep"
-            >
-              {site.ui.hireMe}
-            </Link>
-            <Link
-              href="/"
-              className="text-sm text-paper/70 transition-colors hover:text-accent"
-            >
-              {site.ui.backHome}
-            </Link>
-          </div>
-        </nav>
-      </header>
+    <HireModalProvider siteKey="pmm">
+      <div className="theme-pmm min-h-screen bg-ink text-paper">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <SiteNav
+          label={pmMeta.label}
+          links={NAV_LINKS}
+          cvHref={pmMeta.cvPath}
+        />
 
-      {children}
+        {children}
 
-      <footer className="border-t border-white/10 bg-ink">
-        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-6 gap-y-3 px-6 py-8">
-          <Logo variant="dark" />
-          <span className="flex items-center gap-2 font-mono text-xs text-paper/70">
-            <span
-              aria-hidden="true"
-              className="size-2 rounded-full bg-emerald-400"
-            />
-            {site.ui.availableLabel}
-          </span>
-          <span className="flex-1" aria-hidden="true" />
-          <Link
-            href="/"
-            className="text-sm text-paper/70 transition-colors hover:text-accent"
-          >
-            {site.ui.backHome}
-          </Link>
-          <p className="w-full font-mono text-xs text-paper/40">
-            {site.ui.copyright}
-          </p>
-        </div>
-      </footer>
-    </div>
+        <SiteFooter />
+        <FloatingHire />
+      </div>
+    </HireModalProvider>
   );
 }

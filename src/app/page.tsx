@@ -1,93 +1,55 @@
-import Link from "next/link";
-import { ArrowRight, Linkedin, Mail, MessageCircle } from "lucide-react";
-import { Logo } from "@/components/shared/Logo";
+import { existsSync } from "fs";
+import path from "path";
+import { Linkedin, Mail, MessageCircle } from "lucide-react";
+import { CinematicBackground } from "@/components/home/CinematicBackground";
+import { HomeHero } from "@/components/home/HomeHero";
+import { Clock } from "@/components/shared/Clock";
 import { home } from "@/content/home";
 import { site } from "@/content/site";
 
 /**
- * HOME — cinematic landing (Master Prompt §5).
- * Phase 1 renders the real copy with the brand system; the cinematic
- * background, 2.5D/3D avatar and motion arrive in Phase 3.
+ * HOME — the cinematic landing page (Master Prompt §5).
+ * A single full-screen impression: layered background built from her
+ * portrait, 2.5D/3D avatar, word-reveal headline and the two big CTAs
+ * that wipe into each skill site. Plus a slim footer strip.
  */
 export default function HomePage() {
+  // Dropping the real assets into /public/avatar/ is the only step
+  // needed to swap the placeholder bust for the real avatar (§5.2).
+  const hasAvatar = existsSync(
+    path.join(process.cwd(), "public", "avatar", "detim-avatar.png")
+  );
+  const hasGlb = existsSync(
+    path.join(process.cwd(), "public", "avatar", "detim-avatar.glb")
+  );
+
   return (
-    <main className="theme-home relative flex min-h-screen flex-col overflow-hidden bg-ink text-paper">
-      {/* Soft orange glow — placeholder for the Phase 3 cinematic background */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-48 right-[-12%] h-[36rem] w-[36rem] rounded-full bg-accent/20 blur-[130px]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-[-30%] left-[-10%] h-[28rem] w-[28rem] rounded-full bg-accent/10 blur-[120px]"
-      />
+    <main id="main" className="theme-home relative flex min-h-dvh flex-col overflow-hidden bg-ink text-paper">
+      <CinematicBackground />
 
-      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-6 py-14">
-        <div className="flex items-center justify-between gap-4">
-          <Logo variant="dark" />
-          <p className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 font-mono text-xs text-paper/90">
-            <span
-              aria-hidden="true"
-              className="size-2 rounded-full bg-emerald-400"
-            />
-            {site.ui.availableLabel}
-          </p>
-        </div>
+      {/* top brand row */}
+      <header className="relative z-20 flex items-center justify-between gap-4 px-6 pt-6 sm:px-10">
+        <p className="font-display text-lg font-bold leading-none tracking-tight">
+          Detim{" "}
+          <span className="font-sans font-light opacity-70">Digital</span>
+        </p>
+        <p className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 font-mono text-xs text-paper/90">
+          <span
+            aria-hidden="true"
+            className="relative flex size-2"
+          >
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60 motion-reduce:animate-none" />
+            <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
+          </span>
+          {site.ui.availableLabel}
+        </p>
+      </header>
 
-        <div className="flex flex-1 flex-col justify-center py-16">
-          <h1 className="max-w-4xl font-display text-4xl font-bold leading-[1.06] tracking-tight sm:text-6xl lg:text-7xl">
-            {home.headlineSegments.map((segment, i) =>
-              segment.accent ? (
-                <span key={i} className="text-accent">
-                  {segment.text}
-                </span>
-              ) : (
-                <span key={i}>{segment.text}</span>
-              )
-            )}
-          </h1>
-          <p className="mt-6 font-serif text-2xl italic text-paper/80 sm:text-3xl">
-            {home.subHeading}
-          </p>
+      <HomeHero content={home} hasAvatar={hasAvatar} hasGlb={hasGlb} />
 
-          <div className="mt-12 grid gap-4 sm:max-w-2xl sm:grid-cols-2">
-            <Link
-              href={home.primaryCta.href}
-              className="group rounded-3xl bg-accent p-6 text-ink transition-colors duration-300 hover:bg-accent-deep"
-            >
-              <span className="flex items-center justify-between font-display text-xl font-bold">
-                {home.primaryCta.label}
-                <ArrowRight
-                  aria-hidden="true"
-                  className="size-5 transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </span>
-              <span className="mt-2 block text-sm opacity-80">
-                {home.primaryCta.helper}
-              </span>
-            </Link>
-
-            <Link
-              href={home.secondaryCta.href}
-              className="group rounded-3xl border border-white/15 bg-paper p-6 text-ink transition-colors duration-300 hover:bg-accent"
-            >
-              <span className="flex items-center justify-between font-display text-xl font-bold">
-                {home.secondaryCta.label}
-                <ArrowRight
-                  aria-hidden="true"
-                  className="size-5 text-accent transition-transform duration-300 group-hover:translate-x-1 group-hover:text-ink"
-                />
-              </span>
-              <span className="mt-2 block text-sm opacity-80">
-                {home.secondaryCta.helper}
-              </span>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      <footer className="border-t border-white/10">
-        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-6 py-5 font-mono text-xs text-paper/60">
+      {/* slim footer strip */}
+      <footer className="relative z-20 border-t border-white/10">
+        <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-6 py-4 font-mono text-xs text-paper/60 sm:px-10">
           <span className="flex items-center gap-2">
             <span
               aria-hidden="true"
@@ -95,7 +57,7 @@ export default function HomePage() {
             />
             {site.ui.availableLabel}
           </span>
-          <span>{site.timezoneLabel}</span>
+          <Clock showOfficePill={false} />
           <span className="flex-1" aria-hidden="true" />
           <a
             href={`mailto:${site.email}`}

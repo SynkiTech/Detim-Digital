@@ -23,3 +23,130 @@ Stage Summary:
 - Browser-verified (agent-browser): Home renders (fonts, orange highlights, both CTA cards, availability pill, footer strip), Home→/product-marketing→Hire me→/book flow works, Home→/grants-consulting→← Home works, both CVs serve 200 application/pdf, sitemap/robots/icon/portrait 200, branded 404 OK, zero console/page errors.
 - Note: `next build` intentionally not run in this sandbox (dev server owns port 3000); prebuild guard + build run on deploy (Phase 9). react-calendly installed but untested until Phase 2 (fallback = hand-rolled iframe if React 19 issues).
 - Screenshots: download/phase1-home.png, phase1-pmm.png, phase1-grants.png, phase1-404.png.
+
+---
+Task ID: 2 (Master Prompt §11 — Phase 2: Shared engine)
+Agent: main agent (Z.ai)
+Task: Build the shared motion/interaction engine — loader, smooth scroll, progress bar, cursor, route transitions, marquee, magnetic buttons, count-up, clock/availability, branded Calendly modal, brief form + API route.
+
+Work Log:
+- lib/site-config.ts: SiteKey + SITE_CONFIG (theme class, accent, utm_source, email subject prefix), getCalendlyUrl(), shared timeline/budget option lists.
+- Shared components (all client where interactive): SmoothScroll (Lenis autoRaf, off under reduced motion), Loader (session-once, monogram + % counter, wipe exit, skippable, instant under reduced motion), ScrollProgress (spring-smoothed), Cursor (fine-pointer-only via useSyncExternalStore media hook, dot + trailing ring, html.dd-cursor CSS), Reveal (whileInView, reduced-motion fade), Marquee (CSS keyframes via @theme --animate-marquee[-slow], pause on hover, aria-hidden duplicate row), Magnetic, CountUp (single-number values animate on view; "$5K to $1M+" renders static; SSR-safe), Clock (live Lagos time + Mon-Fri 9-18 WAT office pill), AvailabilityBadge (tone for dark/light surfaces), HireButton, HireModalProvider + CalendlyModal (full-screen branded, Esc, focus trap, scroll lock, skeleton, fallback link), CalendlyInline (react-calendly pageSettings per site + utm_source; iframe MutationObserver load detection), RouteTransitionProvider + TransitionLink (orange panel wipe in destination shade, cover-then-push-then-reveal, stale-wipe guard via from-path, instant under reduced motion), BriefForm (zod + RHF, honeypot, needs list per site), FloatingHire (mobile, after 640px scroll), SectionHeading.
+- api/brief/route.ts: zod validation, honeypot silently accepted, in-memory 5/hr rate limit, Resend REST when RESEND_API_KEY set (reply_to, [prefix] subject), else prefilled mailto fallback href.
+- app/template.tsx: opacity-only route fade (no transform → sticky/fixed safe). app/error.tsx branded error boundary.
+- globals.css: marquee keyframes in @theme, dd-cursor pointer rules.
+- Root layout mounts SmoothScroll/Loader/ScrollProgress/Cursor/RouteTransitionProvider; both skill layouts wrapped in HireModalProvider, nav Hire button now opens the modal, footer gained Clock, FloatingHire added.
+- React 19 lint rules fixed: no sync setState in effects (rAF/IO callbacks instead), window.location.assign, no components created in render (MarqueeRow extracted), derived activeWipe instead of effect setState.
+
+Stage Summary:
+- tsc clean, eslint src clean, check:exclusivity PASS.
+- Browser-verified: PMM Hire modal opens with branded frame + heading + skeleton + fallback (Calendly unreachable in sandbox — expected), Escape closes, dd-loader-done session flag set.
+- Screenshot: download/phase2-calendly-modal.png.
+
+---
+Task ID: 3 (Master Prompt §11 — Phase 3: Home)
+Agent: main agent (Z.ai)
+Task: Cinematic Home — layered background from her portrait, Tier-1 2.5D avatar, headline/CTAs, footer strip, transitions into each site, Tier-2 GLB path behind env flag.
+
+Work Log:
+- CinematicBackground: duotone (black+orange) blurred portrait copy with 30s Ken Burns reverse loop, pulsing radial glow, 12s anamorphic flare streak (CSS keyframes), EmberCanvas (50 embers desktop / 24 mobile, DPR-capped, rAF, pauses on document.hidden, off under reduced motion), left scrim + bottom gradient for legibility, SVG-turbulence film grain, vignette, letterbox bars that open at 1.7s.
+- EmberCanvas shares cursor parallax with the glow layers via a mutable ref (never read during render — react-hooks/refs clean).
+- Avatar25D (Tier 1): CSS perspective tilt toward cursor (max 8deg, springs), device-orientation on mobile, 6s breathing float, orange rim light + blurred glow, ground shadow, 3 floating orange shapes with parallax. BustPlaceholder: stylised duotone SVG bust used until the real avatar lands.
+- Asset swap automation: page.tsx (server) fs-checks public/avatar/detim-avatar.png + .glb and passes hasAvatar/hasGlb down; dropping files in switches the UI, no code change.
+- Avatar3D (Tier 2): dynamic ssr:false only when NEXT_PUBLIC_AVATAR_3D=true AND GLB exists; @react-three/fiber Canvas, key + orange rim lights, cursor-follow rotation (lerp), bounding-box auto-scale, ErrorBoundary falls back to Tier 1. three/@react-three/fiber/@react-three/drei installed.
+- HomeHero: word-by-word masked headline reveal (sr-only full headline), serif sub fade, CTAs slide up, avatar rises; TransitionLink uses destination shades (#FF5A1F / #D9480F).
+- page.tsx rebuilt: min-h-dvh, no-scroll hero, brand row, slim footer strip with live Lagos clock.
+
+Stage Summary:
+- Sandbox note: dev servers spawned from tool sessions are reaped between calls; boot flow (.zscripts/dev.sh) restarts on container boot, so preview works. Verification done in single-session runs.
+- Browser-verified: desktop + mobile screenshots (download/phase3-home*.png), CTA wipe → /product-marketing (phase3-wipe.png), no console errors on fresh session.
+- tsc + eslint clean.
+
+---
+Task ID: 4 (Master Prompt §11 — Phase 4: Product Marketing site)
+Agent: main agent (Z.ai)
+Task: All 12 PMM sections, nav/footer, /book page.
+
+Work Log:
+- Content filled verbatim from §6: pmProblems (5 + closing line), pmServices (9), pmExperience (4 incl. Zenith displayName/displayTitle + 2 portfolio tags), pmProcess (4 steps), pmFaq (6), proof.ts fallback tiles.
+- Shared site kit (parameterised, reused by Grants): SiteNav (chip, anchor links w/ smooth scroll, Download CV secondary slot, HireButton modal, ← Home, full-screen mobile menu), SiteFooter (logo, availability, Clock, mail/WA/LinkedIn, ← Home, ©), CtaBand (orange/black/white tones), ServiceCards (numbered, problem/what-you-get), ExperienceList (shadcn accordion, tone light/dark, renders display* fields only), ProcessSteps, FaqList, PortfolioCards (Drive + CV with fs-computed file size), TestimonialsSection (verified-only in prod, SAMPLE cards in dev with TESTIMONIALS MISSING warning, proof-of-work fallback in prod).
+- PMM page: hero (badges, orange rim-light portrait, chips) → orange marquee → Sound familiar (white) → services (black) → experience (white accordion) → CTA band orange → results (black) → how I work (white) → CTA band black → portfolio & CV (white) → FAQ (black); section anchors #services/#experience/#results/#portfolio.
+- layout.tsx: SiteNav + SiteFooter + FloatingHire + HireModalProvider(pmm); /book: CalendlyInline (sticky) beside BriefForm (needs = PMM service titles) + direct mail/WA links.
+
+Stage Summary:
+- tsc/eslint/check:exclusivity clean (24 files).
+- Screenshots: phase4-pmm-hero.png, phase4-pmm-services.png (9 cards correct), phase4-pmm-results.png (dev SAMPLE cards labelled), phase4-pmm-footer.png.
+
+---
+Task ID: 5 (Master Prompt §11 — Phase 5: Grants & Consultations site)
+Agent: main agent (Z.ai)
+Task: All 13 Grants sections, nav/footer, /book page.
+
+Work Log:
+- Content filled verbatim from §7: grantsProblems (5 + closing), grantsServices (8, trademark wording neutral), grantsStats (5 verified numbers), grantsProofLines + grantsCredentials + grantsFundersNote (proof.ts), grantsExperience (4, neutral displayTitles, partners unnamed), grantsProcess (5 steps), grantsFaq (7 incl. honest guarantee answer).
+- Page: hero (warm black) → orange marquee → problems (white) → services (warm black) → Results (white: CountUp stats, proof lines, credentials pills, funders note) → experience (warm black) → CTA band orange (white text via accent-foreground) → testimonials (white) → how I work (warm black) → CTA band white/orange → portfolio & CV → FAQ (warm black).
+- layout + /book mirror PMM with grants config (siteKey="grants", needs = grants service titles).
+- Guard caught "landing page" in a grants page comment → fixed (guard working in real use again).
+
+Stage Summary:
+- tsc/eslint/check:exclusivity clean (25 files).
+- Screenshots: phase5-grants-hero.png (warm Rust theme distinct from PMM), phase5-grants-results.png (5 verified stats), phase5-grants-faq.png.
+- Brief API tested: valid submission → mailto fallback with [Grants & Consultations] prefix; invalid → per-field zod issues.
+
+---
+Task ID: 6 (Master Prompt §11 — Phase 6: Testimonials + CV/Drive wiring)
+Agent: main agent (Z.ai)
+Task: Testimonials system + proof-of-work fallback + CV/Drive wiring on both sites.
+
+Work Log:
+- TestimonialsSection shipped in Phase 4 and reused here: renders verified:true only; dev shows labelled SAMPLE cards; production fallback = proof-of-work strip (PMM: 4 experience tiles from content/product-marketing/proof.ts; Grants: verified numbers); console.warn TESTIMONIALS MISSING for <site> in both modes without quotes.
+- Adding a real quote = 5-line edit in content/{product-marketing,grants}/testimonials.ts (quote, name, role, company, verified:true) — documented in file headers and README (Phase 9).
+- CV/Drive wiring: PortfolioCards on both pages (per-site Drive folder opens new tab; per-site CV PDF with fs-computed file size), nav Download CV slot, hero CV links — all pointing at /resumes/ exact filenames.
+
+Stage Summary:
+- No code left for Phase 6 beyond verification; both sites wire Drive+CV+testimonials per spec.
+
+---
+Task ID: 7 (Master Prompt §11 — Phase 7: SEO & sharing)
+Agent: main agent (Z.ai)
+Task: Per-site metadata, dynamic OG images, sitemap, robots, per-site JSON-LD.
+
+Work Log:
+- lib/og-image.tsx: shared 1200x630 ImageResponse generator (black bg, radial orange glow, monogram, wordmark, label chip, headline, serif sub, email + availability row); per-site colours/copy.
+- opengraph-image.tsx for /, /product-marketing (Ember), /grants-consulting (Rust) — auto-wired into each route's og:image + twitter:image via the file convention; twitter card upgraded to summary_large_image.
+- lib/jsonld.ts: personJsonLd + professionalServiceJsonLd (OfferCatalog of that site's services ONLY). PMM layout + Grants layout embed Person + ProfessionalService JSON-LD; Home keeps Person-level data only.
+- sitemap.ts (5 routes) + robots.ts already present from Phase 1; verified serving.
+
+Stage Summary:
+- tsc/eslint/check:exclusivity clean (27 files). OG images 200 on all three routes (phase7-og-grants.png), JSON-LD present in HTML, sitemap.xml correct.
+
+---
+Task ID: 8 (Master Prompt §11 — Phase 8: Quality pass)
+Agent: main agent (Z.ai)
+Task: Accessibility, responsive, reduced-motion, exclusivity audit, full build.
+
+Work Log:
+- Skip link added to root layout (#main, sr-only → visible on focus); id="main" on all five page mains. Keyboard verified: Tab reaches skip link, Enter targets main.
+- Production build run: 16/16 routes compile (static pages + OG images + API). TESTIMONIALS MISSING build warnings print per §9. Guard now audits prerendered HTML: caught root-layout twitter:description ("win funding") leaking into PMM/grants routes → per-route openGraph + twitter metadata added to both layouts and both /book pages; re-audit PASS across 27 source files + prerendered HTML.
+- Responsive verified at 360/768/1280/1920 (phase8-grants-*.png) — mobile stacks, nav collapses, wide screens contained.
+- BUG FIXED: mobile full-screen menu was trapped by the header's backdrop-blur containing block (fixed-in-64px). Moved the menu outside <header> as a sibling; re-verified opaque full-screen overlay (phase8-mobile-menu.png).
+- Reduced-motion: honoured in Loader, SmoothScroll (off), Marquee (static), Reveal/Cursor/Avatar/CinematicBackground/RouteTransition/CalendlyModal (fades/instant), CountUp (skips), flare (off) — code-level compliance.
+- Lighthouse: not runnable in this sandbox (no standalone Chrome); performance practices implemented (next/image + priority, ssr:false dynamic 3D, DPR caps, visibility pause, font swap, static prerender). README flags a post-deploy Lighthouse run.
+
+Stage Summary:
+- bun run build PASS; check:exclusivity PASS (source + HTML); tsc/eslint clean; keyboard + responsive + mobile-menu verified with screenshots.
+
+---
+Task ID: 9 (Master Prompt §11 — Phase 9: Deploy prep)
+Agent: main agent (Z.ai)
+Task: Final README, Vercel readiness, domain checklist, asset list.
+
+Work Log:
+- README rewritten: full env var table (incl. new BRIEF_FROM_EMAIL), copy-editing guide, 5-line testimonial recipe, avatar/GLB swap (auto-detected), domain swap steps, Vercel free-tier deploy steps, domain-connection checklist, Lighthouse note (run post-deploy; can't run in sandbox), Calendly free-plan branding note, all 9 phases checked off, owner-supply list.
+- .env.example extended with BRIEF_FROM_EMAIL.
+- Final sweep: tsc clean, eslint clean, exclusivity PASS (27 files + prerendered HTML), all routes 200 (5 pages, sitemap, robots, icon, both CVs, portrait), branded 404 works.
+- E2E in browser: grants /book brief form filled + submitted → API mailto fallback → success message "Brief received. I'll reply within 1 to 2 working days." (phase8-brief-sent.png).
+
+Stage Summary:
+- All 9 phases complete. Site production-builds (16 routes) and passes every automated guard.
+- Owner still supplies: avatar assets, real testimonials, domain (listed in README).

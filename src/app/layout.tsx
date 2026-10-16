@@ -8,6 +8,11 @@ import {
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/toaster";
+import { Loader } from "@/components/shared/Loader";
+import { SmoothScroll } from "@/components/shared/SmoothScroll";
+import { ScrollProgress } from "@/components/shared/ScrollProgress";
+import { Cursor } from "@/components/shared/Cursor";
+import { RouteTransitionProvider } from "@/components/shared/RouteTransition";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -53,7 +58,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: `${site.name} | ${site.person}`,
     description:
       "Take your product to market, or win funding and plan your growth. Choose where to go next.",
@@ -74,7 +79,19 @@ export default function RootLayout({
       <body
         className={`${bricolage.variable} ${instrument.variable} ${inter.variable} ${jetbrains.variable} antialiased bg-ink text-paper font-sans`}
       >
-        {children}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:rounded-full focus:bg-accent focus:px-5 focus:py-2.5 focus:font-display focus:text-sm focus:font-bold focus:text-accent-foreground"
+        >
+          Skip to content
+        </a>
+        <SmoothScroll />
+        <Loader />
+        <ScrollProgress />
+        <Cursor />
+        <RouteTransitionProvider>
+          {children}
+        </RouteTransitionProvider>
         <Toaster />
         <Analytics />
         <SpeedInsights />
