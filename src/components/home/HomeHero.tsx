@@ -1,14 +1,10 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { Avatar25D } from "@/components/home/Avatar25D";
 import { TransitionLink } from "@/components/shared/RouteTransition";
 import type { HomeContent } from "@/content/home";
 
-// Tier-2 real 3D avatar — only pulled in when the env flag is set AND the
-// GLB exists; falls back to Tier 1 inside the chunk on any GLB failure.
 const SHADE_PMM = "#FF5A1F";
 const SHADE_GRANTS = "#D9480F";
 
@@ -16,27 +12,17 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 type HomeHeroProps = {
   content: HomeContent;
-  /** Server-detected: /public/avatar/detim-avatar.png exists. */
-  hasAvatar: boolean;
-  /** Server-detected: /public/avatar/detim-avatar.glb exists. */
-  hasGlb: boolean;
 };
 
 /**
  * HOME hero (Master Prompt §5): word-by-word masked headline reveal,
- * serif sub-heading, the two big CTAs (each with a one-line helper),
- * and the 2.5D/3D avatar rising into place. Reduced motion: fades only.
+ * serif sub-heading, and the two big CTAs (each with a one-line helper).
+ * The presenter in the background video takes the visual role the avatar
+ * used to hold, so the copy owns a single confident column. Reduced
+ * motion: fades only.
  */
-export function HomeHero({ content, hasAvatar, hasGlb }: HomeHeroProps) {
+export function HomeHero({ content }: HomeHeroProps) {
   const reduce = useReducedMotion();
-
-  const enable3D = process.env.NEXT_PUBLIC_AVATAR_3D === "true" && hasGlb;
-  const Avatar3D = enable3D
-    ? dynamic(() => import("@/components/home/Avatar3D"), {
-        ssr: false,
-        loading: () => <Avatar25D hasRealAvatar={hasAvatar} />,
-      })
-    : null;
 
   // Flatten segments into words, keeping each word's accent flag.
   const words = content.headlineSegments.flatMap((segment) =>
@@ -49,10 +35,9 @@ export function HomeHero({ content, hasAvatar, hasGlb }: HomeHeroProps) {
   let wordIndex = 0;
 
   return (
-    <div className="mx-auto grid w-full max-w-7xl flex-1 grid-cols-1 items-center gap-6 px-6 pb-10 pt-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-4 lg:pt-2">
-      {/* headline + CTAs */}
-      <div className="relative z-10 order-2 lg:order-1">
-        <h1 className="font-display text-[clamp(1.9rem,4.2vw+0.8rem,5rem)] font-extrabold leading-[1.04] tracking-tight">
+    <div className="mx-auto flex w-full max-w-7xl flex-1 items-center px-6 pb-10 pt-6 sm:px-10 lg:pt-2">
+      <div className="relative z-10 w-full">
+        <h1 className="font-display text-[clamp(2rem,4.4vw+0.8rem,5rem)] font-extrabold leading-[1.04] tracking-tight">
           {words.map(({ word, accent }) => {
             const i = wordIndex++;
             return (
@@ -85,7 +70,7 @@ export function HomeHero({ content, hasAvatar, hasGlb }: HomeHeroProps) {
         </h1>
 
         <motion.p
-          className="mt-5 font-serif text-xl italic text-paper/85 sm:text-2xl lg:mt-7 lg:text-3xl"
+          className="mt-5 max-w-2xl font-serif text-xl italic text-paper/85 sm:text-2xl lg:mt-7 lg:text-3xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.9, delay: reduce ? 0 : 1.15, ease: "easeOut" }}
@@ -134,16 +119,6 @@ export function HomeHero({ content, hasAvatar, hasGlb }: HomeHeroProps) {
           </TransitionLink>
         </motion.div>
       </div>
-
-      {/* avatar — rises and settles */}
-      <motion.div
-        className="relative order-1 lg:order-2"
-        initial={reduce ? { opacity: 0 } : { opacity: 0, y: 60, scale: 0.97 }}
-        animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 1, delay: reduce ? 0 : 0.5, ease: EASE }}
-      >
-        {Avatar3D ? <Avatar3D /> : <Avatar25D hasRealAvatar={hasAvatar} />}
-      </motion.div>
     </div>
   );
 }

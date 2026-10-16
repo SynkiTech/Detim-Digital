@@ -190,3 +190,22 @@ Work Log:
 Stage Summary:
 - All three requests shipped: pages are em-dash-free, the nav is a floating transparent pill on both sites, and every page (Home, both skill pages, both /book pages) has a persistent day/night toggle.
 - Default experience unchanged (night); day mode is a full token flip, so future sections built with ink/paper/accent tokens are day-mode-safe automatically.
+
+---
+Task ID: 12 (Post-launch refinement pass 3 — user feedback)
+Agent: main agent (Z.ai)
+Task: Remove the avatar image from the Home hero; make the uploaded presenter video (upload/Untitled video.mp4) the full-bleed Home background with a light dark overlay so copy and CTAs pop.
+
+Work Log:
+- Staged the video: upload/Untitled video.mp4 (H.264, 1920x1080, 30fps, ~10s, 2.6MB) -> public/videos/hero-loop.mp4; extracted poster frame at t=2s -> public/videos/hero-poster.jpg (ffmpeg -ss 2 -frames:v 1).
+- New HeroVideoBackground (client): poster <Image priority> (LCP + permanent reduced-motion still) with the <video> loop (autoPlay muted loop playsInline preload=auto, disablePictureInPicture/RemotePlayback, tabIndex=-1) fading in on canPlay (event-handler state, no effect setState). Overlay stack, all ink-tokenised so day mode flips it into a warm daylight wash automatically: bg-ink/45 mild dim + left gradient (from-ink/60 via-ink/20) seating the copy column + bottom gradient (from-ink/85 to-ink/40) for footer/brand-row contrast + radial vignette (.hero-vignette) + 4.5% film grain. Reduced motion: video never renders; poster stands in.
+- HomeHero rewritten: Avatar25D/Avatar3D column removed; single confident column (flex, items-center). Headline clamp retuned to clamp(2rem,4.4vw+0.8rem,5rem) with the max-w cap dropped so the greedy break lands after the name: "Hi, I'm Oluwadetimi Ajayi," / "a Tech Product Marketer" / "and a Grant Expert." (verified at 1440 and 1920). Word-reveal, serif sub and both CTAs unchanged.
+- page.tsx: swapped CinematicBackground -> HeroVideoBackground; removed existsSync avatar/GLB plumbing and props.
+- Deleted now-dead components: Avatar25D, Avatar3D, BustPlaceholder, CinematicBackground, EmberCanvas. globals.css: cine-* day rules replaced by .hero-video (day: brightness 1.08 / saturate 1.05) + .hero-vignette (day: opacity .3); flare-sweep keyframes removed; grain kept.
+- Deps pruned: three, @react-three/fiber, @react-three/drei, @types/three removed from package.json (bun install: removed 4). NEXT_PUBLIC_AVATAR_3D removed from .env.example + .env.local. README updated (Home description, stack, env table, hero-video swap instructions incl. poster regeneration command, phase 3 note, owner-supply list).
+- Verified in browser (agent-browser): video confirmed playing (poses differ across screenshots); night + day at 1440 and 1920 (name intact, copy/CTAs pop, presenter visible); mobile 390 night (stacks cleanly, legible); CTA wipe / -> /product-marketing works; zero page errors.
+- bun run lint (incl. exclusivity guard: 27 files + prerendered HTML) PASS, tsc clean (src), bun run build PASS (16/16 routes).
+- Screenshots: download/r3-home-night-video.png, r3-home-day-video.png, r3-home-night-v2.png, r3-home-1920.png, r3-home-night-v3.png, r3-home-mobile-night.png.
+
+Stage Summary:
+- Home is now a video-first cinematic hero: avatar gone, presenter loop full-bleed under a restrained dark overlay, single-column copy with the two CTAs. Day/night toggle continues to work (tokenised overlay flips with it). All quality gates green.

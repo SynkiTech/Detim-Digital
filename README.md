@@ -2,7 +2,7 @@
 
 The personal brand site of **Oluwadetimi Ajayi** — three experiences in one domain:
 
-1. **Home** (`/`) — cinematic landing with a 2.5D/3D avatar and two doors.
+1. **Home** (`/`) — cinematic landing with a full-bleed presenter video, dark overlay and two doors.
 2. **Product Marketing** (`/product-marketing`) — "Ember" theme, its own nav, copy, CV, portfolio and book page.
 3. **Grant & Business Consultations** (`/grants-consulting`) — "Rust" theme, fully self-contained.
 
@@ -12,8 +12,7 @@ Each skill site is **exclusive to its skill**; the two never appear together exc
 ## Stack
 
 Next.js 16 (App Router) · TypeScript (strict) · Tailwind CSS 4 · Framer Motion · Lenis ·
-lucide-react · react-calendly · zod + react-hook-form · @vercel/analytics + speed-insights ·
-optional three/@react-three/fiber + drei (Tier-2 3D avatar, loaded only on Home with the env flag).
+lucide-react · react-calendly · zod + react-hook-form · @vercel/analytics + speed-insights.
 Fonts: Bricolage Grotesque (headlines) · Instrument Serif (sub-headings) · Inter (body) · JetBrains Mono (labels).
 
 ## Getting started
@@ -30,7 +29,6 @@ bun run dev                  # http://localhost:3000
 | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | production | Canonical URL for metadata, sitemap, OG images. Swap when the domain is connected. |
 | `NEXT_PUBLIC_CALENDLY_URL` | no | Overrides the Calendly link (defaults to the one in `src/content/site.ts`). |
-| `NEXT_PUBLIC_AVATAR_3D` | no | Set `true` to enable the Tier-2 real-3D avatar (requires `public/avatar/detim-avatar.glb`). |
 | `CONTACT_TO_EMAIL` | recommended | Where briefs are emailed (defaults to the address in `site.ts`). |
 | `RESEND_API_KEY` | no | When set, briefs send via Resend; without it the form falls back to a prefilled `mailto:` — it always works. |
 | `BRIEF_FROM_EMAIL` | no | Resend "from" address (defaults to Resend's onboarding sender; set your domain once verified). |
@@ -74,10 +72,9 @@ and prints `TESTIMONIALS MISSING for <site>` at build time. Optional fields: `ph
 
 ## Swapping brand assets
 
-- **3D avatar:** drop `public/avatar/detim-avatar.png` (~1600×2000, transparent) — Home switches from the SVG bust automatically (server-side file check). Optional: `detim-avatar.glb` (+ `NEXT_PUBLIC_AVATAR_3D=true`) upgrades to the real-3D tier with automatic fallback; `detim-backdrop.jpg` is reserved for the backdrop layer.
-- **Portrait:** `public/images/oluwadetimi-ajayi-portrait.jpg` (used on both skill-site heroes and the cinematic backdrop).
+- **Hero video:** `public/videos/hero-loop.mp4` (H.264, muted, ~10s loop) plays full-bleed behind the Home hero under a dark overlay. Swap the file (keep the name) and regenerate the poster: `ffmpeg -ss 2 -i public/videos/hero-loop.mp4 -frames:v 1 -q:v 3 public/videos/hero-poster.jpg`. Best results: 16:9, dark background, subject centred, under ~5 MB.
+- **Portrait:** `public/images/oluwadetimi-ajayi-portrait.jpg` (used on both skill-site heroes).
 - **CVs:** `public/resumes/Oluwadetimi-Ajayi-Product-Marketing-Manager-CV.pdf` and `public/resumes/Oluwadetimi-Ajayi-Grant-Writer-Resume.pdf` (exact filenames matter — referenced in each `meta.ts`; the site shows the real file size).
-- **Hero loop video (optional):** `public/video/hero-loop.mp4` slot is documented in the master prompt; not yet wired.
 
 ## Swapping the domain
 
@@ -110,7 +107,7 @@ and prints `TESTIMONIALS MISSING for <site>` at build time. Optional fields: `ph
 
 - [x] **Phase 1 — Foundation:** theme tokens (Home/Ember/Rust scopes), fonts, logo + favicon, folder structure, content scaffolds, `.env.example`, exclusivity guard wired into `prebuild` + `lint`
 - [x] **Phase 2 — Shared engine:** loader, smooth scroll, progress bar, cursor, route transitions, marquee, magnetic buttons, count-up, clock/availability, branded Calendly modal, brief form + API (zod, honeypot, rate limit, Resend/mailto fallback)
-- [x] **Phase 3 — Home:** cinematic layered background from her portrait, 2.5D avatar (+ Tier-2 GLB behind env flag), word-reveal headline, CTAs with cinematic wipes, footer strip
+- [x] **Phase 3 — Home:** full-bleed hero video loop under a dark overlay, word-reveal headline, CTAs with cinematic wipes, footer strip
 - [x] **Phase 4 — Product Marketing site:** all 12 sections, nav/footer, `/book`
 - [x] **Phase 5 — Grants & Consultations site:** all 13 sections, nav/footer, `/book`
 - [x] **Phase 6 — Testimonials system + proof-of-work fallback + CV/Drive wiring**
@@ -120,7 +117,6 @@ and prints `TESTIMONIALS MISSING for <site>` at build time. Optional fields: `ph
 
 ## Owner supplies later
 
-- 3D-style avatar (`detim-avatar.png`, optional `.glb`, `detim-backdrop.jpg`)
 - Real testimonials (client messages, LinkedIn recommendations to quote)
 - The domain (set in `NEXT_PUBLIC_SITE_URL`, connect on Vercel)
-- Optional: `hero-loop.mp4`, deeper Drive case details
+- Optional: a longer/branded cut of the hero video (drop-in `public/videos/hero-loop.mp4`), deeper Drive case details

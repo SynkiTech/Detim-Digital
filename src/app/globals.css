@@ -231,21 +231,15 @@ html[data-mode="day"] .theme-grants {
   scroll-margin-top: 6.5rem;
 }
 
-/* Day-mode tuning for the Home cinematic layers: the film stays, but
-   it reads as a warm daylight wash instead of a dark projection. */
-html[data-mode="day"] .cine-portrait {
-  opacity: 0.3 !important;
-  filter: grayscale(0.15) sepia(0.3) hue-rotate(-15deg) saturate(1.7)
-    brightness(1.12) contrast(1.02) blur(72px) !important;
+/* Day-mode tuning for the Home hero video: the loop stays, but it sits
+   under the warm daylight wash (the ink-tokenised gradients flip to
+   paper automatically) and gets a small brightness lift so deep-ink
+   copy keeps AA contrast over the footage. */
+html[data-mode="day"] .hero-video {
+  filter: brightness(1.08) saturate(1.05);
 }
-html[data-mode="day"] .cine-vignette {
-  opacity: 0.35;
-}
-html[data-mode="day"] .cine-embers {
-  opacity: 0.45;
-}
-html[data-mode="day"] .cine-bar {
-  background: transparent;
+html[data-mode="day"] .hero-vignette {
+  opacity: 0.3;
 }
 
 @layer base {
@@ -303,39 +297,9 @@ html[data-mode="day"] .cine-bar {
    owns scroll inertia; CSS smooth scrolling would conflict with it. */
 
 /* ---------------------------------------------------------------
-   Cinematic home extras (Master Prompt §5.3): film grain texture
-   and the anamorphic lens-flare sweep (visible 2.4s of every 12s).
+   Cinematic home extra (Master Prompt §5.3): film grain texture.
    --------------------------------------------------------------- */
 .grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
   background-size: 240px 240px;
-}
-
-@keyframes flare-sweep {
-  0% {
-    transform: translateX(-40vw);
-    opacity: 0;
-  }
-  6% {
-    opacity: 1;
-  }
-  20% {
-    transform: translateX(180vw);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(180vw);
-    opacity: 0;
-  }
-}
-
-.flare-streak {
-  animation: flare-sweep 12s linear infinite;
-  will-change: transform, opacity;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .flare-streak {
-    animation: none;
-  }
 }

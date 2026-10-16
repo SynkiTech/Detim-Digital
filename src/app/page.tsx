@@ -1,7 +1,5 @@
-import { existsSync } from "fs";
-import path from "path";
 import { Linkedin, Mail, MessageCircle } from "lucide-react";
-import { CinematicBackground } from "@/components/home/CinematicBackground";
+import { HeroVideoBackground } from "@/components/home/HeroVideoBackground";
 import { HomeHero } from "@/components/home/HomeHero";
 import { Clock } from "@/components/shared/Clock";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
@@ -10,23 +8,15 @@ import { site } from "@/content/site";
 
 /**
  * HOME — the cinematic landing page (Master Prompt §5).
- * A single full-screen impression: layered background built from her
- * portrait, 2.5D/3D avatar, word-reveal headline and the two big CTAs
- * that wipe into each skill site. Plus a slim footer strip.
+ * A single full-screen impression: the presenter video loop behind a
+ * dark overlay, word-reveal headline and the two big CTAs that wipe
+ * into each skill site. Plus a slim footer strip.
  */
 export default function HomePage() {
-  // Dropping the real assets into /public/avatar/ is the only step
-  // needed to swap the placeholder bust for the real avatar (§5.2).
-  const hasAvatar = existsSync(
-    path.join(process.cwd(), "public", "avatar", "detim-avatar.png")
-  );
-  const hasGlb = existsSync(
-    path.join(process.cwd(), "public", "avatar", "detim-avatar.glb")
-  );
 
   return (
     <main id="main" className="theme-home relative flex min-h-dvh flex-col overflow-hidden bg-ink text-paper">
-      <CinematicBackground />
+      <HeroVideoBackground />
 
       {/* top brand row */}
       <header className="relative z-20 flex items-center justify-between gap-4 px-6 pt-6 sm:px-10">
@@ -49,7 +39,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <HomeHero content={home} hasAvatar={hasAvatar} hasGlb={hasGlb} />
+      <HomeHero content={home} />
 
       {/* slim footer strip */}
       <footer className="relative z-20 border-t border-paper/10">
