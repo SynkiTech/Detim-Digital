@@ -37,14 +37,14 @@ export function Logo({
   return (
     <Link
       href={href}
-      aria-label="Detim Digital — home"
+      aria-label="Detim Digital, home"
       className={cn("group inline-flex items-center gap-2.5", className)}
     >
       <span
         aria-hidden="true"
         className={cn(
           "grid size-9 shrink-0 place-items-center rounded-xl bg-ink text-accent transition-transform duration-300 group-hover:scale-105",
-          variant === "dark" && "ring-1 ring-white/15"
+          variant === "dark" && "ring-1 ring-paper/15"
         )}
       >
         <Monogram className="size-5" />

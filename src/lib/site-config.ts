@@ -74,7 +74,7 @@ export function getCalendlyUrl(cfg: SiteThemeConfig): string {
 
 /** Shared "Send a brief" form option lists (site-agnostic). */
 export const BRIEF_TIMELINE_OPTIONS = [
-  "ASAP — within 2 weeks",
+  "ASAP, within 2 weeks",
   "Within a month",
   "In 1 to 3 months",
   "Just exploring options",
@@ -82,8 +82,8 @@ export const BRIEF_TIMELINE_OPTIONS = [
 
 export const BRIEF_BUDGET_OPTIONS = [
   "Under $500",
-  "$500 – $1,500",
-  "$1,500 – $5,000",
+  "$500 to $1,500",
+  "$1,500 to $5,000",
   "$5,000+",
   "Not sure yet",
 ] as const;

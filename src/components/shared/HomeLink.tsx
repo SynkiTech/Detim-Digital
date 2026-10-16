@@ -50,7 +50,7 @@ export function HomeLink({
       onNavigate={onNavigate}
       ariaLabel="Back to the Home page"
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3.5 py-1.5 font-display text-xs font-bold text-paper transition-colors duration-300 hover:border-accent hover:text-accent sm:px-4 sm:py-2 sm:text-sm",
+        "inline-flex items-center gap-1.5 rounded-full border border-paper/20 px-3.5 py-1.5 font-display text-xs font-bold text-paper transition-colors duration-300 hover:border-accent hover:text-accent sm:px-4 sm:py-2 sm:text-sm",
         className
       )}
     >

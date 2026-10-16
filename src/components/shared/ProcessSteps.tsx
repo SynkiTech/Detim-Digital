@@ -25,7 +25,7 @@ export function ProcessSteps({ process, tone = "dark" }: ProcessStepsProps) {
             "relative flex flex-col gap-3 rounded-3xl border p-6",
             light
               ? "border-ink/10 bg-paper shadow-sm"
-              : "border-white/10 bg-ink-2/70"
+              : "border-paper/10 bg-ink-2/70"
           )}
         >
           <span

@@ -22,11 +22,11 @@ const TONES = {
     hover: "hover:no-underline",
   },
   dark: {
-    item: "border-white/10 bg-ink-2/70 data-[state=open]:border-accent/50",
+    item: "border-paper/10 bg-ink-2/70 data-[state=open]:border-accent/50",
     title: "text-paper",
     dates: "text-paper/50",
     company: "text-accent",
-    tag: "border-white/20 text-paper/60",
+    tag: "border-paper/20 text-paper/60",
     summary: "text-paper/70",
     label: "text-paper/50",
     bullet: "text-paper/85",

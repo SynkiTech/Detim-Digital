@@ -14,4 +14,4 @@ export const grantsCredentials = [
 ];
 
 export const grantsFundersNote =
-  "Funders covered include US federal programmes (SBIR/STTR, NSF, NIH, USAID, SBA), foundations and corporate funders — across health, technology, education and the environment.";
+  "Funders covered include US federal programmes (SBIR/STTR, NSF, NIH, USAID, SBA), foundations and corporate funders, across health, technology, education and the environment.";

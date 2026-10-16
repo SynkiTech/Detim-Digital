@@ -50,7 +50,7 @@ function buildBody(data: BriefData): string {
     "",
     `Name: ${data.name}`,
     `Email: ${data.email}`,
-    `Organisation: ${data.organisation || "—"}`,
+    `Organisation: ${data.organisation || "Not provided"}`,
     `What they need: ${data.need}`,
     `Timeline: ${data.timeline}`,
     `Budget range: ${data.budget || "Not shared"}`,

@@ -39,7 +39,7 @@ export default function ErrorPage({
           </button>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-7 py-3.5 font-display font-bold transition-colors duration-300 hover:border-accent hover:text-accent"
+            className="inline-flex items-center gap-2 rounded-full border border-paper/20 px-7 py-3.5 font-display font-bold transition-colors duration-300 hover:border-accent hover:text-accent"
           >
             Back to {site.name}
           </Link>

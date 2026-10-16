@@ -88,14 +88,14 @@ export default function ProductMarketingPage() {
               <HireButton magnetic className="px-7 py-3.5" />
               <Link
                 href={pmHero.ctas.work.href}
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-7 py-3.5 font-display text-base font-bold text-paper transition-colors duration-300 hover:border-accent hover:text-accent"
+                className="inline-flex items-center gap-2 rounded-full border border-paper/20 px-7 py-3.5 font-display text-base font-bold text-paper transition-colors duration-300 hover:border-accent hover:text-accent"
               >
                 {pmHero.ctas.work.label}
               </Link>
               <a
                 href={pmHero.ctas.cv.href}
                 download
-                className="inline-flex items-center gap-2 text-sm text-paper/70 underline decoration-white/30 underline-offset-4 transition-colors hover:text-accent"
+                className="inline-flex items-center gap-2 text-sm text-paper/70 underline decoration-paper/30 underline-offset-4 transition-colors hover:text-accent"
               >
                 <Download className="size-4" aria-hidden="true" />
                 {pmHero.ctas.cv.label}
@@ -107,7 +107,7 @@ export default function ProductMarketingPage() {
                 {pmHero.chips.map((chip) => (
                   <li
                     key={chip}
-                    className="rounded-full border border-white/15 px-3.5 py-1.5 font-mono text-xs text-paper/70"
+                    className="rounded-full border border-paper/15 px-3.5 py-1.5 font-mono text-xs text-paper/70"
                   >
                     {chip}
                   </li>
@@ -132,7 +132,7 @@ export default function ProductMarketingPage() {
                 width={640}
                 height={800}
                 priority
-                className="aspect-[4/5] w-full rounded-[28px] border border-white/10 object-cover"
+                className="aspect-[4/5] w-full rounded-[28px] border border-paper/10 object-cover"
               />
             </div>
           </Reveal>
@@ -201,7 +201,7 @@ export default function ProductMarketingPage() {
           <SectionHeading
             eyebrow="Services"
             title="Everything you need to take your product to market."
-            sub="Pick one piece or the whole journey — every service starts from your customer, not from a template."
+            sub="Pick one piece or the whole journey. Every service starts from your customer, not from a template."
           />
           <div className="mt-12 lg:mt-14">
             <ServiceCards services={pmServices} />

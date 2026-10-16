@@ -126,7 +126,7 @@ export function EmberCanvas({ pointer }: EmberCanvasProps) {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="absolute inset-0 h-full w-full motion-reduce:hidden"
+      className="cine-embers absolute inset-0 h-full w-full motion-reduce:hidden"
     />
   );
 }

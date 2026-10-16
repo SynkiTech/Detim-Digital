@@ -180,6 +180,74 @@
   --gray: #F6F3F0;
 }
 
+/* ---------------------------------------------------------------
+   Day / night mode. Night is the authored default (dark, cinematic).
+   Day flips the ink/paper axes: bands that were near-black read as
+   warm paper, bands that were white read as deep warm ink, cards and
+   chips keep their relative contrast, and the orange accent with its
+   AA-tested accent-foreground pairings is untouched. Alpha utilities
+   keep working because Tailwind 4 compiles them to color-mix() over
+   these same variables.
+   Scopes: :root (Home defaults) plus each theme scope, because the
+   scope classes redefine the brand shades on their own element.
+   --------------------------------------------------------------- */
+html {
+  color-scheme: dark;
+}
+html[data-mode="day"] {
+  color-scheme: light;
+  --black: #F6F2EB;
+  --black-2: #FFFFFF;
+  --white: #191512;
+  --gray: #2A251F;
+}
+html[data-mode="day"] .theme-home,
+html[data-mode="day"] .theme-pmm,
+html[data-mode="day"] .theme-grants {
+  --black: #F6F2EB;
+  --black-2: #FFFFFF;
+  --white: #191512;
+  --gray: #2A251F;
+}
+
+/* Gentle cross-fade between modes. Elements that declare their own
+   transition utilities keep those (utilities beat this base rule);
+   everything else eases the flip. Skipped for reduced-motion users. */
+@layer base {
+  @media (prefers-reduced-motion: no-preference) {
+    *,
+    ::before,
+    ::after {
+      transition-property: background-color, border-color, color, fill, stroke;
+      transition-duration: 0.35s;
+      transition-timing-function: ease;
+    }
+  }
+}
+
+/* The floating nav pill is fixed, so anchored sections need headroom
+   when the nav links jump to them. */
+[id] {
+  scroll-margin-top: 6.5rem;
+}
+
+/* Day-mode tuning for the Home cinematic layers: the film stays, but
+   it reads as a warm daylight wash instead of a dark projection. */
+html[data-mode="day"] .cine-portrait {
+  opacity: 0.3 !important;
+  filter: grayscale(0.15) sepia(0.3) hue-rotate(-15deg) saturate(1.7)
+    brightness(1.12) contrast(1.02) blur(72px) !important;
+}
+html[data-mode="day"] .cine-vignette {
+  opacity: 0.35;
+}
+html[data-mode="day"] .cine-embers {
+  opacity: 0.45;
+}
+html[data-mode="day"] .cine-bar {
+  background: transparent;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -205,7 +273,8 @@
 
   ::selection {
     background: var(--accent);
-    color: var(--black);
+    /* accent-foreground stays AA on orange in both modes */
+    color: var(--accent-foreground);
   }
   :focus-visible {
     outline: 2px solid var(--accent);

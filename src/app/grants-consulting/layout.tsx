@@ -46,7 +46,7 @@ export default function GrantsConsultingLayout({
   const jsonLd = [
     personJsonLd(),
     professionalServiceJsonLd(
-      "Grants & Business Consultations — Oluwadetimi Ajayi",
+      "Grants & Business Consultations, Oluwadetimi Ajayi",
       grantsMeta.description,
       "/grants-consulting",
       grantsServices.map((s) => s.title)

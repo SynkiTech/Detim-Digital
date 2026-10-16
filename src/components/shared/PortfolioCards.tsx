@@ -36,7 +36,7 @@ export function PortfolioCards({
             "group flex h-full flex-col justify-between gap-6 rounded-3xl border p-7 transition-colors duration-300 sm:p-8",
             light
               ? "border-ink/10 bg-paper shadow-sm hover:border-accent/50"
-              : "border-white/10 bg-ink-2/70 hover:border-accent/50"
+              : "border-paper/10 bg-ink-2/70 hover:border-accent/50"
           )}
         >
           <span
@@ -60,7 +60,7 @@ export function PortfolioCards({
                 light ? "text-ink/60" : "text-paper/60"
               )}
             >
-              Opens in a new tab — real work, real outcomes.
+              Opens in a new tab. Real work, real outcomes.
             </span>
           </span>
           <span className="font-mono text-xs uppercase tracking-widest text-accent">
@@ -83,7 +83,7 @@ export function PortfolioCards({
             "group flex h-full flex-col justify-between gap-6 rounded-3xl border p-7 transition-colors duration-300 sm:p-8",
             light
               ? "border-ink/10 bg-paper shadow-sm hover:border-accent/50"
-              : "border-white/10 bg-ink-2/70 hover:border-accent/50"
+              : "border-paper/10 bg-ink-2/70 hover:border-accent/50"
           )}
         >
           <span

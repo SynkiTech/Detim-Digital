@@ -18,7 +18,7 @@ export const pmFaq: FaqItem[] = [
     id: "early-stage",
     question: "Do you work with early-stage teams?",
     answer:
-      "Yes — most of my work is with early-stage tech products. Working lean is an advantage here: we can test the message with real customers quickly and adjust before you spend heavily on ads or a big launch.",
+      "Yes. Most of my work is with early-stage tech products. Working lean is an advantage here: we can test the message with real customers quickly and adjust before you spend heavily on ads or a big launch.",
   },
   {
     id: "remote",
@@ -30,7 +30,7 @@ export const pmFaq: FaqItem[] = [
     id: "brief",
     question: "What should I send in a brief?",
     answer:
-      "Three things: what your product does in a sentence or two, who you're trying to reach, and what you want to change most right now. Anything else — links, metrics, past campaigns — is a bonus, not a requirement.",
+      "Three things: what your product does in a sentence or two, who you're trying to reach, and what you want to change most right now. Anything else, like links, metrics or past campaigns, is a bonus, not a requirement.",
   },
   {
     id: "pricing",

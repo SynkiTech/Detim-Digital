@@ -38,7 +38,7 @@ type BriefFormProps = {
 type Status = "idle" | "sending" | "sent" | "mailto" | "error";
 
 const inputClasses =
-  "w-full rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-paper placeholder:text-paper/40 transition-colors focus:border-accent focus:outline-none";
+  "w-full rounded-2xl border border-paper/15 bg-paper/5 px-4 py-3 text-sm text-paper placeholder:text-paper/40 transition-colors focus:border-accent focus:outline-none";
 
 /**
  * "Send a brief" form (Master Prompt §10). Parameterised by site:
@@ -115,7 +115,7 @@ export function BriefForm({ siteKey, needs }: BriefFormProps) {
         </p>
         <p className="mt-2 text-sm text-paper/70">
           {status === "mailto"
-            ? "Your email app should have opened with everything ready to send — just press send."
+            ? "Your email app should have opened with everything ready to send. Just press send."
             : "Keep an eye on your inbox. Anything urgent in the meantime, WhatsApp works fastest."}
         </p>
         <button
@@ -133,7 +133,7 @@ export function BriefForm({ siteKey, needs }: BriefFormProps) {
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className="grid gap-5 rounded-3xl border border-white/10 bg-ink-2/60 p-6 sm:p-8"
+      className="grid gap-5 rounded-3xl border border-paper/10 bg-ink-2/60 p-6 sm:p-8"
     >
       {/* Honeypot — visually hidden, ignored by humans */}
       <div className="absolute -left-[9999px] size-px overflow-hidden" aria-hidden="true">
@@ -277,7 +277,7 @@ export function BriefForm({ siteKey, needs }: BriefFormProps) {
       {status === "error" ? (
         <p role="alert" className="text-sm text-red-400">
           Something went wrong sending the form. Please email me directly at
-          oluwadetimiajayi@gmail.com — or try again.
+          oluwadetimiajayi@gmail.com, or try again.
         </p>
       ) : null}
 

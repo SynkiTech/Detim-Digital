@@ -79,6 +79,13 @@ export default function RootLayout({
       <body
         className={`${bricolage.variable} ${instrument.variable} ${inter.variable} ${jetbrains.variable} antialiased bg-ink text-paper font-sans`}
       >
+        {/* Restore the saved day/night mode before first paint (no flash).
+            Night is the default; the ThemeToggle writes "dd-mode". */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem("dd-mode")==="day"){document.documentElement.dataset.mode="day"}}catch(e){}`,
+          }}
+        />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:rounded-full focus:bg-accent focus:px-5 focus:py-2.5 focus:font-display focus:text-sm focus:font-bold focus:text-accent-foreground"

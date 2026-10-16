@@ -7,12 +7,12 @@ import { grantsServices } from "@/content/grants/services";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Book a call | Grants & Consultations — Oluwadetimi Ajayi",
+  title: "Book a call | Grants & Consultations",
   description:
     "Book a 30-minute call or send a brief. I'll reply within 1 to 2 working days.",
   alternates: { canonical: "/grants-consulting/book" },
   openGraph: {
-    title: "Book a call | Grants & Consultations — Oluwadetimi Ajayi",
+    title: "Book a call | Grants & Consultations",
     description:
       "Book a 30-minute call or send a brief. I'll reply within 1 to 2 working days.",
     url: "/grants-consulting/book",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Book a call | Grants & Consultations — Oluwadetimi Ajayi",
+    title: "Book a call | Grants & Consultations",
     description:
       "Book a 30-minute call or send a brief. I'll reply within 1 to 2 working days.",
   },
@@ -39,14 +39,14 @@ export default function BookPage() {
           {site.ui.bookHeading}
         </h1>
         <p className="mt-4 max-w-xl text-paper/75">
-          Pick a time that suits you, or send the brief below — either way,
+          Pick a time that suits you, or send the brief below. Either way,
           I&apos;ll reply within 1 to 2 working days.
         </p>
       </Reveal>
 
       <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-12">
         <Reveal delay={0.08}>
-          <div className="relative min-h-[560px] overflow-hidden rounded-3xl border border-white/10 bg-ink-2/60 lg:sticky lg:top-24 lg:h-[720px]">
+          <div className="relative min-h-[560px] overflow-hidden rounded-3xl border border-paper/10 bg-ink-2/60 lg:sticky lg:top-24 lg:h-[720px]">
             <CalendlyInline siteKey="grants" className="absolute inset-0" />
           </div>
         </Reveal>
@@ -57,7 +57,7 @@ export default function BookPage() {
               Prefer to write it down? Send a brief.
             </h2>
             <p className="mb-7 mt-2 text-sm text-paper/70">
-              Tell me where you are and what you need — I&apos;ll come to the
+              Tell me where you are and what you need, and I&apos;ll come to the
               call with a point of view.
             </p>
           </Reveal>
@@ -71,7 +71,7 @@ export default function BookPage() {
           <Reveal delay={0.2} className="mt-8 flex flex-wrap items-center gap-4">
             <a
               href={`mailto:${site.email}`}
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm text-paper/85 transition-colors hover:border-accent hover:text-accent"
+              className="inline-flex items-center gap-2 rounded-full border border-paper/15 px-5 py-2.5 text-sm text-paper/85 transition-colors hover:border-accent hover:text-accent"
             >
               <Mail className="size-4" aria-hidden="true" />
               {site.email}
@@ -80,7 +80,7 @@ export default function BookPage() {
               href={site.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm text-paper/85 transition-colors hover:border-accent hover:text-accent"
+              className="inline-flex items-center gap-2 rounded-full border border-paper/15 px-5 py-2.5 text-sm text-paper/85 transition-colors hover:border-accent hover:text-accent"
             >
               <MessageCircle className="size-4" aria-hidden="true" />
               WhatsApp

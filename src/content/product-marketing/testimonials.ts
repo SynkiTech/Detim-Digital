@@ -12,7 +12,7 @@ import type { Testimonial } from "../types";
 export const pmTestimonials: Testimonial[] = [
   {
     quote:
-      "He rebuilt how we talk about our product, starting from the customer. The positioning he wrote is now the language our whole team uses — our landing page finally makes sense in the first five seconds.",
+      "He rebuilt how we talk about our product, starting from the customer. The positioning he wrote is now the language our whole team uses, and our landing page finally makes sense in the first five seconds.",
     name: "Adaeze Okonkwo",
     role: "Co-founder",
     company: "SaaS startup",

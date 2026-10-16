@@ -13,7 +13,7 @@ import type { Testimonial } from "../types";
 export const grantsTestimonials: Testimonial[] = [
   {
     quote:
-      "We had been rejected twice before we found Detim. He rebuilt our narrative around what the funder actually scores, ran a mock review with us — and we won. He tells you the truth about your application.",
+      "We had been rejected twice before we found Detim. He rebuilt our narrative around what the funder actually scores, ran a mock review with us, and we won. He tells you the truth about your application.",
     name: "Ngozi Eze",
     role: "Executive Director",
     company: "Youth development nonprofit",
@@ -29,7 +29,7 @@ export const grantsTestimonials: Testimonial[] = [
   },
   {
     quote:
-      "His revisions took our federal application from solid to funded — a seven-figure award. Detim sees the weaknesses a program officer would see, before the program officer sees them.",
+      "His revisions took our federal application from solid to funded, a seven-figure award. Detim sees the weaknesses a program officer would see, before the program officer sees them.",
     name: "David Okafor",
     role: "Operations Lead",
     company: "Government contracting firm",

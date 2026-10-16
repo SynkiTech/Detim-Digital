@@ -19,7 +19,7 @@ export function AvailabilityBadge({
       className={cn(
         "inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono text-xs",
         tone === "onDark"
-          ? "border border-white/15 bg-white/5 text-paper/90"
+          ? "border border-paper/15 bg-paper/5 text-paper/90"
           : "border border-ink/15 bg-ink text-paper",
         className
       )}

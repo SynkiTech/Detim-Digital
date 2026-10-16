@@ -95,14 +95,14 @@ export default function GrantsConsultingPage() {
               <HireButton magnetic className="px-7 py-3.5" />
               <Link
                 href={grantsHero.ctas.work.href}
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-7 py-3.5 font-display text-base font-bold text-paper transition-colors duration-300 hover:border-accent hover:text-accent"
+                className="inline-flex items-center gap-2 rounded-full border border-paper/20 px-7 py-3.5 font-display text-base font-bold text-paper transition-colors duration-300 hover:border-accent hover:text-accent"
               >
                 {grantsHero.ctas.work.label}
               </Link>
               <a
                 href={grantsHero.ctas.cv.href}
                 download
-                className="inline-flex items-center gap-2 text-sm text-paper/70 underline decoration-white/30 underline-offset-4 transition-colors hover:text-accent"
+                className="inline-flex items-center gap-2 text-sm text-paper/70 underline decoration-paper/30 underline-offset-4 transition-colors hover:text-accent"
               >
                 <Download className="size-4" aria-hidden="true" />
                 {grantsHero.ctas.cv.label}
@@ -114,7 +114,7 @@ export default function GrantsConsultingPage() {
                 {grantsHero.chips.map((chip) => (
                   <li
                     key={chip}
-                    className="rounded-full border border-white/15 px-3.5 py-1.5 font-mono text-xs text-paper/70"
+                    className="rounded-full border border-paper/15 px-3.5 py-1.5 font-mono text-xs text-paper/70"
                   >
                     {chip}
                   </li>
@@ -139,7 +139,7 @@ export default function GrantsConsultingPage() {
                 width={640}
                 height={800}
                 priority
-                className="aspect-[4/5] w-full rounded-[28px] border border-white/10 object-cover"
+                className="aspect-[4/5] w-full rounded-[28px] border border-paper/10 object-cover"
               />
             </div>
           </Reveal>
@@ -207,7 +207,7 @@ export default function GrantsConsultingPage() {
         <div className="mx-auto w-full max-w-6xl px-6 py-20 sm:py-24 lg:py-28">
           <SectionHeading
             eyebrow="Services"
-            title="From first idea to funded project — and everything after."
+            title="From first idea to funded project, and everything after."
             sub="One piece or the whole journey, always built around what the funder is looking for."
           />
           <div className="mt-12 lg:mt-14">
@@ -320,7 +320,7 @@ export default function GrantsConsultingPage() {
               siteLabel="Grants & Consultations"
               fallback={{
                 title: "Verified results",
-                sub: "The numbers above are verified from real applications — real quotes are being collected now.",
+                sub: "The numbers above are verified from real applications. Real quotes are being collected now.",
                 tiles: grantsStats.map((stat) => ({
                   value: stat.value,
                   label: stat.label,

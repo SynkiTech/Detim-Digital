@@ -28,7 +28,7 @@ export function FaqList({ items, tone = "dark" }: FaqListProps) {
             "rounded-2xl border px-5 sm:px-6",
             light
               ? "border-ink/10 bg-paper shadow-sm data-[state=open]:border-accent/40"
-              : "border-white/10 bg-ink-2/70 data-[state=open]:border-accent/50"
+              : "border-paper/10 bg-ink-2/70 data-[state=open]:border-accent/50"
           )}
         >
           <AccordionTrigger className="py-5 text-left hover:no-underline">

@@ -119,7 +119,7 @@ export function HomeHero({ content, hasAvatar, hasGlb }: HomeHeroProps) {
           <TransitionLink
             href={content.secondaryCta.href}
             shade={SHADE_GRANTS}
-            className="group rounded-3xl border border-white/15 bg-paper p-5 text-ink transition-colors duration-300 hover:bg-accent hover:text-ink sm:p-6"
+            className="group rounded-3xl border border-paper/15 bg-paper p-5 text-ink transition-colors duration-300 hover:bg-accent hover:text-ink sm:p-6"
           >
             <span className="flex items-center justify-between gap-3 font-display text-lg font-bold sm:text-xl">
               {content.secondaryCta.label}

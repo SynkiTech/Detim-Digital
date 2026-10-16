@@ -10,7 +10,7 @@ export const pmProofFallback: {
   tiles: ProofTile[];
 } = {
   title: "Proof of work",
-  sub: "Real projects, honestly described — the portfolio folder has the details.",
+  sub: "Real projects, honestly described. The portfolio folder has the details.",
   tiles: [
     {
       value: "Positioning that lands",

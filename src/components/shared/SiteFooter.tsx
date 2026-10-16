@@ -12,7 +12,7 @@ import { site } from "@/content/site";
  */
 export function SiteFooter() {
   return (
-    <footer className="border-t border-white/10 bg-ink">
+    <footer className="border-t border-paper/10 bg-ink">
       <div className="mx-auto w-full max-w-6xl px-6 py-12">
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <Logo variant="dark" />
@@ -48,7 +48,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-6">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-paper/5 pt-6">
           <p className="font-mono text-xs text-paper/40">{site.ui.copyright}</p>
           <HomeLink variant="quiet" />
         </div>

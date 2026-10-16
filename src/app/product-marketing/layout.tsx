@@ -46,7 +46,7 @@ export default function ProductMarketingLayout({
   const jsonLd = [
     personJsonLd(),
     professionalServiceJsonLd(
-      "Product Marketing — Oluwadetimi Ajayi",
+      "Product Marketing, Oluwadetimi Ajayi",
       pmMeta.description,
       "/product-marketing",
       pmServices.map((s) => s.title)

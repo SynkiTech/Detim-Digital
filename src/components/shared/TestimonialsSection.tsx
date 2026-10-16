@@ -19,21 +19,21 @@ const isDev = process.env.NODE_ENV === "development";
 
 const SAMPLES: Testimonial[] = [
   {
-    quote: "SAMPLE: replace me — a short line about the result you got, in the client's own words.",
+    quote: "SAMPLE: replace me. A short line about the result you got, in the client's own words.",
     name: "Client name",
     role: "Role",
     company: "Company",
     verified: false,
   },
   {
-    quote: "SAMPLE: replace me — keep quotes short, specific and human.",
+    quote: "SAMPLE: replace me. Keep quotes short, specific and human.",
     name: "Client name",
     role: "Role",
     company: "Company",
     verified: false,
   },
   {
-    quote: "SAMPLE: replace me — one client per card, five lines max.",
+    quote: "SAMPLE: replace me. One client per card, five lines max.",
     name: "Client name",
     role: "Role",
     company: "Company",
@@ -67,16 +67,16 @@ export function TestimonialsSection({
   }
 
   if (isDev) {
-    console.warn(`TESTIMONIALS MISSING for ${siteLabel} — showing SAMPLE cards (dev only).`);
+    console.warn(`TESTIMONIALS MISSING for ${siteLabel}, showing SAMPLE cards (dev only).`);
     return (
       <div>
         <p
           className={cn(
             "mb-6 rounded-2xl border border-dashed px-4 py-2.5 font-mono text-xs",
-            light ? "border-ink/20 text-ink/60" : "border-white/20 text-paper/60"
+            light ? "border-ink/20 text-ink/60" : "border-paper/20 text-paper/60"
           )}
         >
-          SAMPLE: replace me — add real, verified quotes in
+          SAMPLE: replace me. Add real, verified quotes in
           content/{siteLabel === "Product Marketing" ? "product-marketing" : "grants"}/testimonials.ts
           (set verified: true).
         </p>
@@ -85,7 +85,7 @@ export function TestimonialsSection({
     );
   }
 
-  console.warn(`TESTIMONIALS MISSING for ${siteLabel} — falling back to the proof-of-work strip.`);
+  console.warn(`TESTIMONIALS MISSING for ${siteLabel}, falling back to the proof-of-work strip.`);
 
   return (
     <div>
@@ -99,7 +99,7 @@ export function TestimonialsSection({
               "flex flex-col justify-between gap-4 rounded-3xl border p-6",
               light
                 ? "border-ink/10 bg-paper shadow-sm"
-                : "border-white/10 bg-ink-2/70"
+                : "border-paper/10 bg-ink-2/70"
             )}
           >
             <span
@@ -163,7 +163,7 @@ function TestimonialGrid({
             "flex flex-col gap-5 rounded-3xl border p-7",
             light
               ? "border-ink/10 bg-paper shadow-sm"
-              : "border-white/10 bg-ink-2/70"
+              : "border-paper/10 bg-ink-2/70"
           )}
         >
           <div className="flex items-center justify-between">
@@ -179,7 +179,7 @@ function TestimonialGrid({
               <span
                 className={cn(
                   "rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest",
-                  light ? "bg-ink/5 text-ink/60" : "bg-white/5 text-paper/60"
+                  light ? "bg-ink/5 text-ink/60" : "bg-paper/5 text-paper/60"
                 )}
               >
                 Verified
@@ -197,7 +197,7 @@ function TestimonialGrid({
           <figcaption
             className={cn(
               "flex items-center gap-3 border-t pt-4",
-              light ? "border-ink/10" : "border-white/10"
+              light ? "border-ink/10" : "border-paper/10"
             )}
           >
             <span

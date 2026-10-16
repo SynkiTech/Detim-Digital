@@ -80,11 +80,11 @@ export function CalendlyModal({ siteKey, open, onClose }: CalendlyModalProps) {
           exit={reduce ? { opacity: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
         >
-          <header className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4 sm:px-8">
+          <header className="flex items-center justify-between gap-4 border-b border-paper/10 px-5 py-4 sm:px-8">
             <div className="flex items-center gap-3">
               <span
                 aria-hidden="true"
-                className="grid size-9 place-items-center rounded-xl bg-ink-2 text-accent ring-1 ring-white/10"
+                className="grid size-9 place-items-center rounded-xl bg-ink-2 text-accent ring-1 ring-paper/10"
               >
                 <Monogram className="size-5" />
               </span>
@@ -102,7 +102,7 @@ export function CalendlyModal({ siteKey, open, onClose }: CalendlyModalProps) {
               type="button"
               onClick={onClose}
               aria-label="Close booking modal"
-              className="grid size-10 place-items-center rounded-full border border-white/15 text-paper/80 transition-colors hover:border-accent hover:text-accent"
+              className="grid size-10 place-items-center rounded-full border border-paper/15 text-paper/80 transition-colors hover:border-accent hover:text-accent"
             >
               <X className="size-5" aria-hidden="true" />
             </button>

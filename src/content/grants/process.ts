@@ -31,7 +31,7 @@ export const grantsProcess: ProcessContent = {
       id: "submit-follow-through",
       title: "Submit & follow through",
       description:
-        "We submit with confidence — and if you win, I help you track results and report clearly.",
+        "We submit with confidence. If you win, I help you track results and report clearly.",
     },
   ],
 };

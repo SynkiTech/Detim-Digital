@@ -4,6 +4,7 @@ import { Linkedin, Mail, MessageCircle } from "lucide-react";
 import { CinematicBackground } from "@/components/home/CinematicBackground";
 import { HomeHero } from "@/components/home/HomeHero";
 import { Clock } from "@/components/shared/Clock";
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { home } from "@/content/home";
 import { site } from "@/content/site";
 
@@ -33,22 +34,25 @@ export default function HomePage() {
           Detim{" "}
           <span className="font-sans font-light opacity-70">Digital</span>
         </p>
-        <p className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 font-mono text-xs text-paper/90">
-          <span
-            aria-hidden="true"
-            className="relative flex size-2"
-          >
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60 motion-reduce:animate-none" />
-            <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
-          </span>
-          {site.ui.availableLabel}
-        </p>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <p className="hidden items-center gap-2 rounded-full border border-paper/15 bg-paper/5 px-4 py-1.5 font-mono text-xs text-paper/90 sm:flex">
+            <span
+              aria-hidden="true"
+              className="relative flex size-2"
+            >
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60 motion-reduce:animate-none" />
+              <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
+            </span>
+            {site.ui.availableLabel}
+          </p>
+        </div>
       </header>
 
       <HomeHero content={home} hasAvatar={hasAvatar} hasGlb={hasGlb} />
 
       {/* slim footer strip */}
-      <footer className="relative z-20 border-t border-white/10">
+      <footer className="relative z-20 border-t border-paper/10">
         <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-6 py-4 font-mono text-xs text-paper/60 sm:px-10">
           <span className="flex items-center gap-2">
             <span

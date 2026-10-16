@@ -102,7 +102,7 @@ export function Loader() {
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="grid size-16 place-items-center rounded-2xl bg-ink-2 ring-1 ring-white/10"
+              className="grid size-16 place-items-center rounded-2xl bg-ink-2 ring-1 ring-paper/10"
             >
               <Monogram className="size-9 text-accent" />
             </motion.span>
@@ -112,7 +112,7 @@ export function Loader() {
             </p>
             <div
               aria-hidden="true"
-              className="h-px w-40 overflow-hidden bg-white/10"
+              className="h-px w-40 overflow-hidden bg-paper/10"
             >
               <div
                 className="h-full bg-accent transition-[width] duration-100 ease-linear"

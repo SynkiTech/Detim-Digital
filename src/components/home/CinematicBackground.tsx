@@ -81,7 +81,7 @@ export function CinematicBackground() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-[50%_20%] opacity-45 blur-[80px] saturate-[1.6] contrast-[1.15]"
+            className="cine-portrait object-cover object-[50%_20%] opacity-45 blur-[80px] saturate-[1.6] contrast-[1.15]"
             style={{
               filter:
                 "grayscale(0.75) sepia(0.55) hue-rotate(-18deg) saturate(2.2) brightness(0.5) contrast(1.1) blur(72px)",
@@ -121,7 +121,7 @@ export function CinematicBackground() {
       {/* 5 — grain + vignette */}
       <div className="grain absolute inset-0 opacity-[0.05]" />
       <div
-        className="absolute inset-0"
+        className="cine-vignette absolute inset-0"
         style={{
           background:
             "radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(0,0,0,0.55) 100%)",
@@ -132,13 +132,13 @@ export function CinematicBackground() {
       {!reduce && (
         <>
           <motion.div
-            className="absolute inset-x-0 top-0 z-10 h-[9vh] bg-black"
+            className="cine-bar absolute inset-x-0 top-0 z-10 h-[9vh] bg-black"
             initial={{ y: 0 }}
             animate={{ y: "-100%" }}
             transition={{ duration: 1.1, delay: 1.7, ease: [0.76, 0, 0.24, 1] }}
           />
           <motion.div
-            className="absolute inset-x-0 bottom-0 z-10 h-[9vh] bg-black"
+            className="cine-bar absolute inset-x-0 bottom-0 z-10 h-[9vh] bg-black"
             initial={{ y: 0 }}
             animate={{ y: "100%" }}
             transition={{ duration: 1.1, delay: 1.7, ease: [0.76, 0, 0.24, 1] }}

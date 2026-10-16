@@ -37,7 +37,7 @@ export function HireButton({
         "group inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-display text-sm font-bold transition-colors duration-300 sm:text-base",
         variant === "solid"
           ? "bg-accent text-accent-foreground hover:bg-accent-deep"
-          : "border border-white/25 text-paper hover:border-accent hover:text-accent",
+          : "border border-paper/25 text-paper hover:border-accent hover:text-accent",
         className
       )}
     >

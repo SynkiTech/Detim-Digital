@@ -170,3 +170,23 @@ Stage Summary:
 - tsc clean (src), eslint + exclusivity guard PASS (27 files + prerendered HTML), dev server compiles all routes.
 - Screenshots: download/r1-pmm-hero.png, r1-pmm-testimonials.png, r1-grants-hero.png, r1-pmm-mobile.png, r1-mobile-menu2.png, r1-home-final.png.
 - Note for owner: testimonial names/wording are drafted from real client work — swap in verbatim client quotes in the 5-line format whenever ready.
+
+---
+Task ID: 11 (Post-launch refinement pass 2 — user feedback)
+Agent: main agent (Z.ai)
+Task: (a) remove all em dashes across all pages, (b) replace the full-width nav on both skill sites with a transparent floating pill like jenniesdigital.com, (c) add a day/night contrast toggle on every page.
+
+Work Log:
+- Em-dash sweep: rewrote every user-visible em dash (and the visible en-dash budget ranges) into natural punctuation across content faq/testimonials/process/proof/meta, both page files, both /book pages (titles now "Book a call | <site>"), site-config option lists, BriefForm, PortfolioCards, TestimonialsSection SAMPLE strings, Logo aria-label, OG alt, and JSON-LD names. Verified 0 em/en dashes in the rendered HTML of all 5 routes (scripts stripped; comments never render).
+- Day/night system: night stays the authored default. globals.css adds html[data-mode="day"] scopes that flip the ink/paper axes (--black<->warm paper #F6F2EB, --white<->deep ink #191512, plus black-2/gray) on :root AND on .theme-home/.theme-pmm/.theme-grants; alpha utilities keep working via Tailwind 4 color-mix. Added color-scheme, a base-layer 0.35s color cross-fade (utilities still win), scroll-margin-top 6.5rem for the fixed nav, and ::selection switched to accent-foreground.
+- Tokenized every hardcoded white utility (border/bg/text/ring/decoration-white/* -> paper/*) across shared components, skill pages, book pages, error page and home hero so the flip is complete; ui/ scaffolds and home-only black layers untouched.
+- ThemeToggle (shared, client): sun/moon pill button, reduced-motion-aware icon swap, useSyncExternalStore over documentElement.dataset.mode with a dd-mode-change event so nav + mobile menu + any number of toggles stay in sync; persists to localStorage "dd-mode". Root layout gained a pre-paint inline restore script (no wrong-mode flash); SSR/hydration safe via getServerSnapshot.
+- SiteNav rebuilt: fixed centered wrapper (pointer-events-none) + w-fit glass pill (border-paper/10, bg-ink/55, backdrop-blur-xl, shadow, rounded-full) — never full width (1070px/1440 desktop, 346px/390 mobile). Contains logo, label chip (lg+), anchor links, CV link (md+), HireButton (sm+), ThemeToggle, HomeLink, mobile menu button. Full-screen mobile menu kept as sibling, now with ThemeToggle in its footer row.
+- Home: ThemeToggle added to the brand row (availability pill hidden below sm to avoid overflow); cinematic layers got hooks (.cine-portrait/.cine-vignette/.cine-embers/.cine-bar) with day-mode CSS that turns the film into a warm daylight wash (brighter duotone filter, softer vignette, fainter embers, transparent letterbox bars).
+- Verified in browser (desktop 1440 + mobile 390): pill geometry/centering on both sites; day+night on PMM, Grants, both /book pages and Home; glass pill readable over light and dark bands; toggle persistence across pages; nav<->menu toggle sync; mobile menu day/night; Home pill -> / at scrollY 0.
+- bun run lint (includes exclusivity guard) PASS, tsc clean, bun run build PASS (16/16 routes).
+- Screenshots: download/ref-jennie-nav.png, r2-pmm-nav-night.png, r2-pmm-day.png, r2-pmm-day-mid.png, r2-pmm-day-mid2.png, r2-grants-night.png, r2-grants-day-mid.png, r2-home-day.png, r2-home-night.png, r2-book-day.png, r2-book-day2.png, r2-mobile-nav-day.png, r2-mobile-menu-day.png.
+
+Stage Summary:
+- All three requests shipped: pages are em-dash-free, the nav is a floating transparent pill on both sites, and every page (Home, both skill pages, both /book pages) has a persistent day/night toggle.
+- Default experience unchanged (night); day mode is a full token flip, so future sections built with ink/paper/accent tokens are day-mode-safe automatically.

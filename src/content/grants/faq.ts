@@ -12,7 +12,7 @@ export const grantsFaq: FaqItem[] = [
     id: "which-grants",
     question: "How do I know which grants fit me?",
     answer:
-      "That's the first thing we figure out together. I research funders whose priorities match your work and give you a shortlist with deadlines and honest fit notes — so you don't spend weeks chasing money that was never a match.",
+      "That's the first thing we figure out together. I research funders whose priorities match your work and give you a shortlist with deadlines and honest fit notes, so you don't spend weeks chasing money that was never a match.",
   },
   {
     id: "how-early",
@@ -24,7 +24,7 @@ export const grantsFaq: FaqItem[] = [
     id: "review-draft",
     question: "Can you review a draft I already wrote?",
     answer:
-      "Yes — grant review is one of my services. You get your draft scored against the funder's own criteria with specific, practical fixes: what to cut, what to evidence and what a reviewer will question.",
+      "Yes. Grant review is one of my services. You get your draft scored against the funder's own criteria with specific, practical fixes: what to cut, what to evidence and what a reviewer will question.",
   },
   {
     id: "what-you-need",
@@ -36,7 +36,7 @@ export const grantsFaq: FaqItem[] = [
     id: "pricing",
     question: "How is pricing decided?",
     answer:
-      "Every project is quoted per scope after a short call — research, writing, review and reporting support are all different shapes of work. You'll get a fixed quote before we start, so there are never surprises.",
+      "Every project is quoted per scope after a short call. Research, writing, review and reporting support are all different shapes of work. You'll get a fixed quote before we start, so there are never surprises.",
   },
   {
     id: "after-win",
