@@ -122,7 +122,7 @@ export function SiteNav({ label, links, cvHref }: SiteNavProps) {
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
             <div className="flex h-12 items-center justify-between">
-              <Logo variant="dark" />
+              <Logo variant="dark" onNavigate={() => setOpen(false)} />
               <button
                 type="button"
                 aria-label="Close menu"

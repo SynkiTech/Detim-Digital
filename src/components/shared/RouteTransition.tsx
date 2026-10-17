@@ -16,7 +16,7 @@ import {
   motion,
   useReducedMotion,
 } from "framer-motion";
-import { Monogram } from "@/components/shared/Logo";
+import { Monogram } from "@/components/shared/Monogram";
 
 type TransitionFn = (href: string, shade?: string) => void;
 

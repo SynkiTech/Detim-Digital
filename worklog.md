@@ -257,3 +257,20 @@ Work Log:
 Stage Summary:
 - The brand mark is now a genuine 3D object: brand-ramp gradient face, stepped burnt extrusion, glass gloss on a tokenised ink tile with accent pool lighting, plus a 3D hover tilt. Every brand color family (all three site accents, their deeps, the softs, ink and paper) appears in the single mark.
 - Applied everywhere the brand appears: Home brand row, both skill-site navs + footers, mobile menus, boot Loader, route-wipe, Calendly modal, favicon (icon.svg + apple-icon.png), public/logo.svg, and all three OG images. Day/night and per-site theming intact; all quality gates green.
+
+---
+Task ID: 15 (Logo → Home redirect hardening — user request)
+Agent: main agent (Z.ai)
+Task: Clicking the logo on the two skill pages must redirect to the Home page successfully.
+
+Work Log:
+- Baseline reproduced in browser: the nav pill, footer and mobile pill logos all DID navigate to "/" at scrollY 0 (plain next/link + SmoothScroll scroll reset). But the logo was the only navigation affordance NOT using the cinematic TransitionLink wipe, and the mobile full-screen menu's logo navigated without explicitly closing the menu (relied on layout unmount).
+- Circular-import risk avoided first: Monogram extracted from Logo.tsx into its own module (src/components/shared/Monogram.tsx) so Logo can import RouteTransition's TransitionLink while RouteTransition keeps importing Monogram (Logo->RouteTransition->Logo would have been a cycle). Loader.tsx and CalendlyModal.tsx import paths updated; RouteTransition now imports ./Monogram.
+- Logo.tsx rewritten to use TransitionLink with the Home shade #F25C05 + new onNavigate prop (mirrors HomeLink). Same-route clicks are no-oped inside transitionTo (href === pathname guard), so the Home brand-row logo stays a quiet no-op. Middle-click/new-tab still native (TransitionLink only preventDefaults unmodified clicks).
+- SiteNav mobile menu logo now passes onNavigate={() => setOpen(false)} — the menu animates out as the home wipe starts, body scroll lock released via the existing effect cleanup.
+- Browser-verified every path: PMM pill logo (wipe -> / @ 0), PMM footer logo from 6777px deep scroll (-> / @ 0), Grants pill logo, mobile 390 pill logo, mobile menu logo (menu exit + wipe captured mid-frame, lands / @ 0, bodyOverflow restored, menu unmounted), Home brand-row self-click (no-op, no wipe flash, stays at 0). Boot loader re-verified with the refactored imports (caught at 0% progress, page error-free after). Hit-target probe on all logo instances: elementFromPoint lands inside the link (no overlays). One test-tool locator race (find text) was diagnosed and ruled out as a UI bug.
+- Gates: tsc --noEmit clean, eslint + exclusivity guard PASS, bun run build PASS 16/16.
+- Screenshots: download/r5-logo-wipe.png, r5-menu-before-logo.png, r5-menu-logo-wipe.png, r5-loader-boot.png.
+
+Stage Summary:
+- The logo now behaves exactly like every other navigation element: clicking it on either skill site (nav pill, footer, mobile pill, or mobile menu) plays the Home-orange cinematic wipe and lands at the top of the Home page; on Home itself it is a no-op. Monogram module split removes any dependency cycle. All quality gates green.

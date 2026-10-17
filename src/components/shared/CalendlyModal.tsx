@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
-import { Monogram } from "@/components/shared/Logo";
+import { Monogram } from "@/components/shared/Monogram";
 import { CalendlyInline } from "@/components/shared/CalendlyInline";
 import { site } from "@/content/site";
 import type { SiteKey } from "@/lib/site-config";

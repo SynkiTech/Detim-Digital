@@ -12,7 +12,7 @@ import {
   motion,
   useReducedMotion,
 } from "framer-motion";
-import { Monogram } from "@/components/shared/Logo";
+import { Monogram } from "@/components/shared/Monogram";
 
 const SESSION_KEY = "dd-loader-done";
 const DURATION_MS = 1500;
