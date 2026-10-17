@@ -84,7 +84,7 @@ export function CalendlyModal({ siteKey, open, onClose }: CalendlyModalProps) {
             <div className="flex items-center gap-3">
               <span
                 aria-hidden="true"
-                className="grid size-9 place-items-center rounded-xl bg-ink-2 text-accent ring-1 ring-paper/10"
+                className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-ink-2 to-ink ring-1 ring-paper/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.10),0_10px_24px_-10px_rgb(242_92_5/0.5)]"
               >
                 <Monogram className="size-5" />
               </span>

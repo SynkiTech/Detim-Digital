@@ -91,8 +91,8 @@ export function RouteTransitionProvider({ children }: { children: ReactNode }) {
             exit={{ y: "-100%" }}
             transition={{ duration: WIPE_MS / 1000, ease: [0.76, 0, 0.24, 1] }}
           >
-            <span className="grid size-16 place-items-center rounded-2xl bg-ink/85 ring-1 ring-black/20">
-              <Monogram className="size-8 text-accent" />
+            <span className="grid size-16 place-items-center rounded-2xl bg-ink/90 ring-1 ring-black/20 shadow-[inset_0_1px_0_rgb(255_255_255/0.10),0_14px_36px_-12px_rgb(0_0_0/0.5)]">
+              <Monogram className="size-8" />
             </span>
           </motion.div>
         ) : null}

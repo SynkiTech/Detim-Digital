@@ -43,14 +43,26 @@ export function makeOgImage({ accent, label, title, sub }: OgImageProps) {
               width: 72,
               height: 72,
               borderRadius: 18,
-              backgroundColor: "#0A0A0A",
+              backgroundImage:
+                "linear-gradient(160deg, #262019 0%, #121009 55%, #0A0A0A 100%)",
               border: "1px solid rgba(255,255,255,0.18)",
-              color: accent,
-              fontSize: 44,
-              fontWeight: 800,
+              boxShadow:
+                "inset 0 1px 0 rgba(255,255,255,0.10), 0 16px 36px -14px rgba(242,92,5,0.55)",
             }}
           >
-            D
+            {/* 3D monogram hint: brand-ramp D over a stepped burnt extrusion */}
+            <div
+              style={{
+                display: "flex",
+                fontSize: 44,
+                fontWeight: 800,
+                color: "#FF5A1F",
+                textShadow:
+                  "1px 2px 0 #C2410C, 2px 4px 0 #7C2D08, 3px 6px 12px rgba(0,0,0,0.45)",
+              }}
+            >
+              D
+            </div>
           </div>
           <div style={{ display: "flex", fontSize: 34, fontWeight: 700 }}>
             Detim

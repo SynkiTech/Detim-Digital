@@ -102,9 +102,9 @@ export function Loader() {
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="grid size-16 place-items-center rounded-2xl bg-ink-2 ring-1 ring-paper/10"
+              className="grid size-16 place-items-center rounded-2xl bg-gradient-to-br from-ink-2 to-ink ring-1 ring-paper/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.10),0_18px_44px_-14px_rgb(242_92_5/0.5)]"
             >
-              <Monogram className="size-9 text-accent" />
+              <Monogram className="size-9" />
             </motion.span>
             <p className="font-mono text-xs uppercase tracking-[0.35em] text-paper/80">
               Detim Digital{" "}

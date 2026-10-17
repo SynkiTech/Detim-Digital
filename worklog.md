@@ -237,3 +237,23 @@ FUNCTIONAL (browser-verified, agent-browser)
 Stage Summary:
 - Zero known npm vulnerabilities; hardened headers + CSP; XSS/JSON-LD, mailto, DoS and memory-growth vectors closed; every button, link, anchor, modal, form flow and toggle verified working in browser; typography/spacing consistent; strict type-check enforced at build.
 - Accepted residual: prisma CLI is build/dev-only (db:push in sandbox harness), pinned to a version outside all known advisory ranges; Calendly branding limits noted in README (free plan).
+
+---
+Task ID: 14 (Logo enhancement — 3D brand mark, user request)
+Agent: main agent (Z.ai)
+Task: Enhance the logo to be more 3D centric and brand oriented with a touch of all brand colors, applied across all pages.
+
+Work Log:
+- Monogram (src/components/shared/Logo.tsx) rebuilt as a 3D extruded "D": front face carries the FULL brand orange ramp (#FF9E6B soft highlight -> #FF5A1F PMM -> #F25C05 Home -> #D9480F Grants -> #C2410C deep), two stepped extrusion layers in the burnt family (#C2410C/#7C2D08 and #A33708/#5C1E04), a clipped glass gloss across the lit top half, and optical recentering (-1.8,-2.1) to balance the extrusion. useId-based gradient/clip ids so any number of instances per page can't collide. Now a client component.
+- Logo badge upgraded: gradient ink tile (from-ink-2 via-ink to-ink, tokenised so day mode flips it to warm paper automatically), inset top highlight + ambient accent drop shadow (variant="dark"), radial accent pool light on the tile floor, and a 3D hover interaction (perspective rotateX/rotateY + scale, motion-reduce safe).
+- Call sites: Home brand row now uses <Logo variant="dark"> (previously text-only wordmark, so Home gains the mark); Loader tile -> gradient + accent shadow; CalendlyModal header tile -> same treatment; RouteTransition wipe tile enriched (bg-ink/90 + inset highlight + shadow); text-accent props dropped (fill now comes from the gradients).
+- Static assets: src/app/icon.svg rewritten as the full static 3D tile (ink gradient + top light + bottom accent pool + extruded D + gloss + gradient rim with accent bottom); apple-icon.png regenerated via scripts/generate-icons.mjs (sharp); public/logo.svg replaced (was an unreferenced scaffold "Z" mark).
+- OG images (src/lib/og-image.tsx, all 3 routes): badge upgraded from flat tile to gradient ink tile + ambient accent shadow + "D" with stepped textShadow extrusion (#FF5A1F over #C2410C/#7C2D08) — satori-safe (no background-clip:text needed). Build confirms satori parses; all 3 OG PNGs visually verified.
+- Verified in browser (agent-browser): Home brand row (night), PMM nav pill night + hover tilt + day, Grants nav + footer night + day, mobile 390 pill + full-screen menu, Calendly modal header tile (Calendly still renders), route-wipe monogram captured mid-transition on the accent wipe. Theme persistence across pages still works. Zero page errors.
+- Incidental check: /grant-writing (bogus path) still serves the branded 404.
+- Gates: bun run lint + exclusivity guard PASS (27 files + prerendered HTML), tsc --noEmit clean, bun run build PASS (16/16 routes incl. 3 OG image routes).
+- Screenshots: download/r4-home-logo-night.png, r4-icon-full.png, r4-og-home.png, r4-og-pmm.png, r4-og-grants.png, r4-pmm-nav-night.png, r4-pmm-logo-hover.png, r4-pmm-logo-day.png, r4-grants-nav-night.png, r4-grants-footer.png, r4-grants-night2.png, r4-mobile-logo.png, r4-mobile-hero.png, r4-mobile-menu.png, r4-modal-logo.png, r4-wipe-logo.png.
+
+Stage Summary:
+- The brand mark is now a genuine 3D object: brand-ramp gradient face, stepped burnt extrusion, glass gloss on a tokenised ink tile with accent pool lighting, plus a 3D hover tilt. Every brand color family (all three site accents, their deeps, the softs, ink and paper) appears in the single mark.
+- Applied everywhere the brand appears: Home brand row, both skill-site navs + footers, mobile menus, boot Loader, route-wipe, Calendly modal, favicon (icon.svg + apple-icon.png), public/logo.svg, and all three OG images. Day/night and per-site theming intact; all quality gates green.

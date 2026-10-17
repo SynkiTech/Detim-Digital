@@ -2,6 +2,7 @@ import { Linkedin, Mail, MessageCircle } from "lucide-react";
 import { HeroVideoBackground } from "@/components/home/HeroVideoBackground";
 import { HomeHero } from "@/components/home/HomeHero";
 import { Clock } from "@/components/shared/Clock";
+import { Logo } from "@/components/shared/Logo";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { home } from "@/content/home";
 import { site } from "@/content/site";
@@ -20,10 +21,7 @@ export default function HomePage() {
 
       {/* top brand row */}
       <header className="relative z-20 flex items-center justify-between gap-4 px-6 pt-6 sm:px-10">
-        <p className="font-display text-lg font-bold leading-none tracking-tight">
-          Detim{" "}
-          <span className="font-sans font-light opacity-70">Digital</span>
-        </p>
+        <Logo variant="dark" />
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <p className="hidden items-center gap-2 rounded-full border border-paper/15 bg-paper/5 px-4 py-1.5 font-mono text-xs text-paper/90 sm:flex">
