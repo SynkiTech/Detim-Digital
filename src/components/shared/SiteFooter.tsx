@@ -19,11 +19,11 @@ export function SiteFooter() {
           <AvailabilityBadge className="font-mono text-xs" />
           <Clock className="font-mono text-xs text-paper/70" />
           <span className="flex-1" aria-hidden="true" />
-          <div className="flex items-center gap-4">
+          <div className="flex items-center">
             <a
               href={`mailto:${site.email}`}
               aria-label={`Email ${site.person}`}
-              className="text-paper/70 transition-colors hover:text-accent"
+              className="grid size-11 place-items-center text-paper/70 transition-colors hover:text-accent"
             >
               <Mail className="size-4" aria-hidden="true" />
             </a>
@@ -32,7 +32,7 @@ export function SiteFooter() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="WhatsApp"
-              className="text-paper/70 transition-colors hover:text-accent"
+              className="grid size-11 place-items-center text-paper/70 transition-colors hover:text-accent"
             >
               <MessageCircle className="size-4" aria-hidden="true" />
             </a>
@@ -41,7 +41,7 @@ export function SiteFooter() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="text-paper/70 transition-colors hover:text-accent"
+              className="grid size-11 place-items-center text-paper/70 transition-colors hover:text-accent"
             >
               <Linkedin className="size-4" aria-hidden="true" />
             </a>

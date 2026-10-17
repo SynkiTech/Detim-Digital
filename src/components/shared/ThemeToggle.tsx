@@ -75,7 +75,10 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
       aria-pressed={isDay}
       title={isDay ? "Night mode" : "Day mode"}
       className={cn(
-        "relative grid size-9 shrink-0 place-items-center overflow-hidden rounded-full border border-paper/15 text-paper transition-colors duration-300 hover:border-accent hover:text-accent",
+        // .hit-sm: the 36px control gets a 44px touch target. overflow-hidden
+        // is intentionally absent — it would clip the expanded hit zone, and
+        // the icon swap never paints outside the circle anyway.
+        "hit-sm relative grid size-9 shrink-0 place-items-center rounded-full border border-paper/15 text-paper transition-colors duration-300 hover:border-accent hover:text-accent",
         className
       )}
     >

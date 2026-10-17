@@ -16,7 +16,15 @@ export function FloatingHire() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 640);
+    const onScroll = () => {
+      // Hidden near the page bottom too: the footer's own contact links
+      // (and the FAQ "Send a brief" link) live in that corner — the pill
+      // would only fight them for taps there.
+      const nearBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 480;
+      setVisible(window.scrollY > 640 && !nearBottom);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -33,7 +41,7 @@ export function FloatingHire() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 24 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="fixed bottom-5 right-5 z-[45] inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 font-display text-sm font-bold text-accent-foreground shadow-[0_10px_40px_rgba(242,92,5,0.4)] md:hidden"
+          className="fixed bottom-[calc(1.25rem+env(safe-area-inset-bottom))] right-[calc(1.25rem+env(safe-area-inset-right))] z-[45] inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 font-display text-sm font-bold text-accent-foreground shadow-[0_10px_40px_rgba(242,92,5,0.4)] md:hidden"
         >
           Hire me
           <ArrowRight className="size-4" aria-hidden="true" />

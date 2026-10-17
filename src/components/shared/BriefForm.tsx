@@ -37,8 +37,11 @@ type BriefFormProps = {
 
 type Status = "idle" | "sending" | "sent" | "mailto" | "error";
 
+// text-base on phones: iOS Safari auto-zooms any focused control
+// rendered below 16px, which jumps the whole page. Desktop drops to
+// text-sm again (no zoom behaviour there).
 const inputClasses =
-  "w-full rounded-2xl border border-paper/15 bg-paper/5 px-4 py-3 text-sm text-paper placeholder:text-paper/40 transition-colors focus:border-accent focus:outline-none";
+  "w-full rounded-2xl border border-paper/15 bg-paper/5 px-4 py-3 text-base text-paper placeholder:text-paper/40 transition-colors focus:border-accent focus:outline-none sm:text-sm";
 
 /**
  * "Send a brief" form (Master Prompt §10). Parameterised by site:
@@ -126,7 +129,7 @@ export function BriefForm({ siteKey, needs }: BriefFormProps) {
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-6 font-mono text-xs uppercase tracking-widest text-accent underline-offset-4 hover:underline"
+          className="hit mt-6 font-mono text-xs uppercase tracking-widest text-accent underline-offset-4 hover:underline"
         >
           Send another brief
         </button>

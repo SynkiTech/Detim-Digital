@@ -18,6 +18,12 @@ type LogoProps = {
   variant?: "dark" | "light";
   href?: string;
   withWordmark?: boolean;
+  /**
+   * Extra classes for the wordmark span — e.g. the nav pill hides it
+   * below 360px ("hidden min-[360px]:inline") so the pill fits 320px
+   * screens without dropping any control.
+   */
+  wordmarkClassName?: string;
   /** Called as the home wipe starts — e.g. closes the mobile menu. */
   onNavigate?: () => void;
   className?: string;
@@ -34,6 +40,7 @@ export function Logo({
   variant = "light",
   href = "/",
   withWordmark = true,
+  wordmarkClassName,
   onNavigate,
   className,
 }: LogoProps) {
@@ -43,7 +50,12 @@ export function Logo({
       shade={HOME_SHADE}
       onNavigate={onNavigate}
       ariaLabel="Detim Digital, home"
-      className={cn("group inline-flex items-center gap-2.5", className)}
+      className={cn(
+        // .hit-sm: the 36px tile gets a 44px touch target everywhere the
+        // logo is tappable (nav pill, mobile menu, footer, Home brand row).
+        "group hit-sm inline-flex items-center gap-2.5",
+        className
+      )}
     >
       <span
         aria-hidden="true"
@@ -65,7 +77,7 @@ export function Logo({
         <Monogram className="relative size-5" />
       </span>
       {withWordmark ? (
-        <span className="text-lg leading-none tracking-tight">
+        <span className={cn("text-lg leading-none tracking-tight", wordmarkClassName)}>
           <span className="font-display font-bold">Detim</span>{" "}
           <span className="font-sans font-light opacity-70">Digital</span>
         </span>

@@ -33,7 +33,7 @@ export const metadata: Metadata = {
  */
 export default function BookPage() {
   return (
-    <main id="main" className="mx-auto w-full max-w-6xl px-6 py-16 sm:py-20">
+    <main id="main" className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
       <Reveal>
         <h1 className="max-w-2xl font-display text-4xl font-bold tracking-tight sm:text-5xl">
           {site.ui.bookHeading}

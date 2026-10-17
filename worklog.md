@@ -274,3 +274,34 @@ Work Log:
 
 Stage Summary:
 - The logo now behaves exactly like every other navigation element: clicking it on either skill site (nav pill, footer, mobile pill, or mobile menu) plays the Home-orange cinematic wipe and lands at the top of the Home page; on Home itself it is a no-op. Monogram module split removes any dependency cycle. All quality gates green.
+
+---
+Task ID: 16 (Mobile perfection pass — user request)
+Agent: main agent (Z.ai)
+Task: Work on the mobile view and make it perfect and responsive to all screen types.
+
+Work Log:
+AUDIT
+- Overflow probe (agent-browser eval: scrollWidth vs clientWidth + offender listing) across 5 routes x 8 widths (320/360/375/390/414/428/768/1024): baseline was already clean at the document level, BUT a fixed-element blind spot existed (position:fixed children don't extend scrollWidth) which later caught the nav pill overflowing at 320 on skill pages.
+- Tap-target probe on 4 routes: found 16x16 footer social icons (x6), 36px ThemeToggle, 30px nav Home pill, 20px hero "Download my CV" links, 16px FAQ "Send a brief" links, 20px quiet footer Home link, small testimonial Source + form "Send another brief" links, 34px Calendly fallback chip.
+- Visual sweep at 320/390/428/768 + landscape 844x390: Home/PMM/Grants/book all composed correctly; Calendly widget clipped its 7th weekday column at 320 (272px container) and its fallback chip was clipped both sides.
+
+FIXES
+- globals.css: new mobile polish layer - (1) .hit/.hit-sm invisible pseudo hit-area expanders (14px/4px inset, border-radius inherited) so small controls reach >=44px touch targets (WCAG 2.5.8 / iOS HIG) without visual change; (2) touch-action: manipulation on a/button/[role=button]/summary/input/select/textarea/label (kills double-tap-zoom delay); (3) -webkit-tap-highlight-color: transparent (no grey flash on iOS).
+- Hit targets applied: Logo root (.hit-sm, benefits nav pill/menu/footer/Home brand row), ThemeToggle (.hit-sm + overflow-hidden removed so the pseudo isn't clipped), nav burger + menu close + modal close (.hit-sm), nav Home pill (custom after: -inset-x-2/inset-y-3 tuned to not steal neighbour taps), quiet Home link + hero CV links + FAQ send-a-brief + testimonial Source (bumped to text-xs) + "Send another brief" (.hit), nav Download CV (.hit).
+- Footer + Home social icon rows rebuilt as flush 44px boxes (grid size-11 place-items-center, gap removed, -mr-2 optical alignment) instead of pseudo expansion -> zero overlap between adjacent zones (elementFromPoint verified: every edge tap lands on the right anchor, seams land on the neighbour's 44px zone, no dead space).
+- FloatingHire: now hides near the page bottom (within 480px of scrollHeight) so it never fights the footer contact links / FAQ "Send a brief" for taps (probe had caught it covering the FAQ link).
+- iOS input zoom: BriefForm inputClasses text-sm -> text-base sm:text-sm (16px on all phone widths; computed style verified 16px).
+- Nav pill at 320: children totalled 323px vs 296px available (burger clipped). New Logo wordmarkClassName prop; SiteNav hides the wordmark below 360px (hidden min-[360px]:inline) - all four controls (logo tile, toggle, Home, burger) now fit from 320px up; pill shrink-wraps 232px at 320/340, 336px at 360+. Verified viewport-clean at 320/340/360/375/414/768.
+- Book pages: main px-6 -> px-4 sm:px-6 (Calendly gets 288px at 320); Calendly fallback chip: whitespace-nowrap dropped, w-max + max-w-[calc(100%-2rem)] + text-center added (abs-pos shrink-to-fit had been wrapping it into a blob at left-1/2), copy shortened to "Open Calendly in a new tab" - single clean centred pill at 320 (229x34, fits card).
+- Safe-area future-proofing (no-ops today, correct if the site ever runs cover/PWA): SiteNav header top + env(safe-area-inset-top), mobile menu pt/pb max(env), FloatingHire bottom/right + env, Home header pt / footer pb max(env).
+
+VERIFIED (agent-browser)
+- Interactions at 320/390: mobile menu opens 320x690 with 0 out-of-bounds children, all items present, closes with body scroll restored; menu anchor jump closes menu and lands #services at 104px (clear of the pill); Calendly modal 390x844 with live iframe + body lock, Esc closes and restores; theme toggle flips night->day and persists to localStorage; form input focus at 16px (no zoom).
+- Hit-zone elementFromPoint probes: footer icons, quiet Home, toggle, burger, logo, Home pill, hero CV, FAQ brief - ALL PASS (one real bug found+fixed en route: Home pill's expanded zone was stealing the toggle's right-edge taps; reduced to 4px horizontal growth).
+- Final overflow sweep: 40/40 route-width combos clean. Landscape 844x390 (Home + PMM) verified visually.
+- Screenshots: download/m2-*.png (home 320/390/428/768/landscape/day, pmm 320(+v2)/390/landscape, grants 320/390, book pmm 390 + 320 v2-v5, menu-320, modal-390).
+- Gates: bun run lint + exclusivity guard PASS, tsc --noEmit CLEAN, bun run build PASS 16/16 routes.
+
+Stage Summary:
+- Mobile is now first-class: zero horizontal overflow on every route from 320px through 1024px including the fixed nav (probed, not assumed), every interactive element reaches a >=44px touch target with no dead zones or stolen taps, the nav pill degrades gracefully below 360px, forms no longer trigger iOS focus zoom, the floating Hire pill yields to page-end CTAs, Calendly and its fallback are usable down to 320px, and safe-area insets are wired for future cover/PWA use. Day/night, both themes, all transitions and all previous features intact; lint/tsc/build green.

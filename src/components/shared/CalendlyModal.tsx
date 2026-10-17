@@ -102,7 +102,7 @@ export function CalendlyModal({ siteKey, open, onClose }: CalendlyModalProps) {
               type="button"
               onClick={onClose}
               aria-label="Close booking modal"
-              className="grid size-10 place-items-center rounded-full border border-paper/15 text-paper/80 transition-colors hover:border-accent hover:text-accent"
+              className="hit-sm grid size-10 place-items-center rounded-full border border-paper/15 text-paper/80 transition-colors hover:border-accent hover:text-accent"
             >
               <X className="size-5" aria-hidden="true" />
             </button>

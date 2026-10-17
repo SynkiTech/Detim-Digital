@@ -297,6 +297,51 @@ html[data-mode="day"] .hero-vignette {
    owns scroll inertia; CSS smooth scrolling would conflict with it. */
 
 /* ---------------------------------------------------------------
+   Mobile polish — touch ergonomics (all screen types):
+   1. .hit / .hit-sm — invisible pseudo hit-area expansion so small
+      controls reach the ~44px touch target (WCAG 2.5.8 / iOS HIG)
+      without changing their visual size. Clicks on the pseudo land
+      on the element itself, so behaviour is unchanged.
+   2. touch-action: manipulation on controls — removes the legacy
+      double-tap-zoom delay so taps feel instant.
+   3. tap-highlight off — iOS stops flashing grey over pills/cards;
+      the site's own hover/active/focus states are the feedback.
+   --------------------------------------------------------------- */
+.hit {
+  position: relative;
+}
+.hit::after {
+  content: "";
+  position: absolute;
+  /* 14px each side: a 16px icon becomes a 44px target */
+  inset: -0.875rem;
+  border-radius: inherit;
+}
+.hit-sm {
+  position: relative;
+}
+.hit-sm::after {
+  content: "";
+  position: absolute;
+  /* 4px each side: a 36px control becomes a 44px target */
+  inset: -0.25rem;
+  border-radius: inherit;
+}
+@layer base {
+  a,
+  button,
+  [role="button"],
+  summary,
+  input,
+  select,
+  textarea,
+  label {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* ---------------------------------------------------------------
    Cinematic home extra (Master Prompt §5.3): film grain texture.
    --------------------------------------------------------------- */
 .grain {

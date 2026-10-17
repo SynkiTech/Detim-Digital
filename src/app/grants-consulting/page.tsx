@@ -102,7 +102,7 @@ export default function GrantsConsultingPage() {
               <a
                 href={grantsHero.ctas.cv.href}
                 download
-                className="inline-flex items-center gap-2 text-sm text-paper/70 underline decoration-paper/30 underline-offset-4 transition-colors hover:text-accent"
+                className="hit inline-flex items-center gap-2 text-sm text-paper/70 underline decoration-paper/30 underline-offset-4 transition-colors hover:text-accent"
               >
                 <Download className="size-4" aria-hidden="true" />
                 {grantsHero.ctas.cv.label}
@@ -386,7 +386,7 @@ export default function GrantsConsultingPage() {
             </p>
             <Link
               href={briefHref}
-              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-accent"
+              className="hit group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-accent"
             >
               Send a brief
               <ArrowRight

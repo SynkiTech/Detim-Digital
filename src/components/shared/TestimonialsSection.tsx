@@ -230,7 +230,7 @@ function TestimonialGrid({
                 href={t.sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="ml-auto font-mono text-[10px] uppercase tracking-widest text-accent underline-offset-4 hover:underline"
+                className="hit ml-auto font-mono text-xs uppercase tracking-widest text-accent underline-offset-4 hover:underline"
               >
                 Source
               </a>

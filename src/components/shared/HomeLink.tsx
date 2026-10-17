@@ -34,7 +34,8 @@ export function HomeLink({
         onNavigate={onNavigate}
         ariaLabel="Back to the Home page"
         className={cn(
-          "text-sm text-paper/70 transition-colors hover:text-accent",
+          // .hit: the small text link gets a >=44px touch target.
+          "hit text-sm text-paper/70 transition-colors hover:text-accent",
           className
         )}
       >
@@ -50,7 +51,10 @@ export function HomeLink({
       onNavigate={onNavigate}
       ariaLabel="Back to the Home page"
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border border-paper/20 px-3.5 py-1.5 font-display text-xs font-bold text-paper transition-colors duration-300 hover:border-accent hover:text-accent sm:px-4 sm:py-2 sm:text-sm",
+        // Invisible hit expansion tuned for the crowded nav pill: vertical
+        // growth gives the 30px pill a 54px target; horizontal growth stays
+        // at 4px so it never steals taps from the toggle/burger beside it.
+        "relative inline-flex items-center gap-1.5 rounded-full border border-paper/20 px-3.5 py-1.5 font-display text-xs font-bold text-paper transition-colors duration-300 after:absolute after:inset-x-[-0.25rem] after:inset-y-[-0.75rem] after:rounded-full after:content-[''] hover:border-accent hover:text-accent sm:px-4 sm:py-2 sm:text-sm",
         className
       )}
     >

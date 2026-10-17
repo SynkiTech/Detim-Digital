@@ -50,12 +50,18 @@ export function SiteNav({ label, links, cvHref }: SiteNavProps) {
     <>
       {/* The wrapper is full-width only to centre the pill; the nav
           itself is w-fit so the bar never touches both edges. */}
-      <header className="pointer-events-none fixed inset-x-0 top-3 z-40 flex justify-center px-3 sm:top-4 sm:px-4">
+      <header className="pointer-events-none fixed inset-x-0 top-[calc(0.75rem+env(safe-area-inset-top))] z-40 flex justify-center px-3 sm:top-[calc(1rem+env(safe-area-inset-top))] sm:px-4">
         <nav
           aria-label="Primary"
           className="pointer-events-auto flex h-14 w-fit max-w-full items-center gap-1.5 rounded-full border border-paper/10 bg-ink/55 pl-2.5 pr-2 shadow-[0_12px_40px_-12px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:gap-2 sm:pl-3"
         >
-          <Logo variant="dark" className="shrink-0" />
+          <Logo
+            variant="dark"
+            className="shrink-0"
+            // Below 360px the wordmark steps aside so the pill keeps all
+            // four controls (logo, toggle, Home, menu) on a 320px screen.
+            wordmarkClassName="hidden min-[360px]:inline"
+          />
 
           <span className="ml-1 hidden rounded-full border border-accent/40 px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-accent lg:inline-block">
             {label}
@@ -78,13 +84,13 @@ export function SiteNav({ label, links, cvHref }: SiteNavProps) {
             <a
               href={cvHref}
               download
-              className="hidden items-center gap-1.5 rounded-full px-2.5 py-1.5 text-sm text-paper/70 underline decoration-paper/30 underline-offset-4 transition-colors hover:text-accent md:inline-flex"
+              className="hit hidden items-center gap-1.5 rounded-full px-2.5 py-1.5 text-sm text-paper/70 underline decoration-paper/30 underline-offset-4 transition-colors hover:text-accent md:inline-flex"
             >
               <Download className="size-3.5" aria-hidden="true" />
               Download CV
             </a>
             <HireButton
-              className="hidden px-4 py-2 text-sm sm:inline-flex"
+              className="hit-sm hidden px-4 py-2 text-sm sm:inline-flex"
               showArrow={false}
             />
             <ThemeToggle />
@@ -94,7 +100,7 @@ export function SiteNav({ label, links, cvHref }: SiteNavProps) {
               aria-expanded={open}
               aria-label={open ? "Close menu" : "Open menu"}
               onClick={() => setOpen((v) => !v)}
-              className="grid size-10 place-items-center rounded-full border border-paper/15 text-paper transition-colors hover:border-accent hover:text-accent lg:hidden"
+              className="hit-sm grid size-10 place-items-center rounded-full border border-paper/15 text-paper transition-colors hover:border-accent hover:text-accent lg:hidden"
             >
               {open ? (
                 <X className="size-5" aria-hidden="true" />
@@ -115,7 +121,7 @@ export function SiteNav({ label, links, cvHref }: SiteNavProps) {
         {open ? (
           <motion.div
             key="mobile-menu"
-            className="fixed inset-0 z-50 flex flex-col bg-ink px-6 pb-10 pt-4"
+            className="fixed inset-0 z-50 flex flex-col bg-ink px-6 pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]"
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -16 }}
@@ -127,7 +133,7 @@ export function SiteNav({ label, links, cvHref }: SiteNavProps) {
                 type="button"
                 aria-label="Close menu"
                 onClick={() => setOpen(false)}
-                className="grid size-10 place-items-center rounded-full border border-paper/15 text-paper"
+                className="hit-sm grid size-10 place-items-center rounded-full border border-paper/15 text-paper"
               >
                 <X className="size-5" aria-hidden="true" />
               </button>

@@ -20,7 +20,7 @@ export default function HomePage() {
       <HeroVideoBackground />
 
       {/* top brand row */}
-      <header className="relative z-20 flex items-center justify-between gap-4 px-6 pt-6 sm:px-10">
+      <header className="relative z-20 flex items-center justify-between gap-4 px-6 pt-[max(1.5rem,env(safe-area-inset-top))] sm:px-10">
         <Logo variant="dark" />
         <div className="flex items-center gap-3">
           <ThemeToggle />
@@ -41,7 +41,7 @@ export default function HomePage() {
 
       {/* slim footer strip */}
       <footer className="relative z-20 border-t border-paper/10">
-        <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-6 py-4 font-mono text-xs text-paper/60 sm:px-10">
+        <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-6 pb-[max(1rem,env(safe-area-inset-bottom))] py-4 font-mono text-xs text-paper/60 sm:px-10">
           <span className="flex items-center gap-2">
             <span
               aria-hidden="true"
@@ -51,31 +51,33 @@ export default function HomePage() {
           </span>
           <Clock showOfficePill={false} />
           <span className="flex-1" aria-hidden="true" />
-          <a
-            href={`mailto:${site.email}`}
-            aria-label={`Email ${site.person}`}
-            className="transition-colors hover:text-accent"
-          >
-            <Mail className="size-4" aria-hidden="true" />
-          </a>
-          <a
-            href={site.whatsapp}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="WhatsApp"
-            className="transition-colors hover:text-accent"
-          >
-            <MessageCircle className="size-4" aria-hidden="true" />
-          </a>
-          <a
-            href={site.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="transition-colors hover:text-accent"
-          >
-            <Linkedin className="size-4" aria-hidden="true" />
-          </a>
+          <div className="flex items-center -mr-2">
+            <a
+              href={`mailto:${site.email}`}
+              aria-label={`Email ${site.person}`}
+              className="grid size-11 place-items-center transition-colors hover:text-accent"
+            >
+              <Mail className="size-4" aria-hidden="true" />
+            </a>
+            <a
+              href={site.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+              className="grid size-11 place-items-center transition-colors hover:text-accent"
+            >
+              <MessageCircle className="size-4" aria-hidden="true" />
+            </a>
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="grid size-11 place-items-center transition-colors hover:text-accent"
+            >
+              <Linkedin className="size-4" aria-hidden="true" />
+            </a>
+          </div>
         </div>
       </footer>
     </main>

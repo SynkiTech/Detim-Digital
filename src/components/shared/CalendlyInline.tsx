@@ -108,9 +108,9 @@ export function CalendlyInline({
           href={getCalendlyUrl(cfg)}
           target="_blank"
           rel="noopener noreferrer"
-          className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full border border-paper/20 bg-ink px-5 py-2 font-mono text-xs text-paper/80 transition-colors hover:border-accent hover:text-accent"
+          className="absolute bottom-4 left-1/2 z-10 w-max max-w-[calc(100%-2rem)] -translate-x-1/2 rounded-full border border-paper/20 bg-ink px-5 py-2 text-center font-mono text-xs text-paper/80 transition-colors after:absolute after:inset-[-0.875rem] after:rounded-full after:content-[''] hover:border-accent hover:text-accent"
         >
-          Calendly not loading? Open it in a new tab
+          Open Calendly in a new tab
         </a>
       ) : null}
     </div>
