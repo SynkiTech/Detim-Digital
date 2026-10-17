@@ -8,6 +8,7 @@ import { pmServices } from "@/content/product-marketing/services";
 import {
   personJsonLd,
   professionalServiceJsonLd,
+  safeJsonLd,
 } from "@/lib/jsonld";
 
 /**
@@ -58,7 +59,7 @@ export default function ProductMarketingLayout({
       <div className="theme-pmm min-h-screen bg-ink text-paper">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
         />
         <SiteNav
           label={pmMeta.label}

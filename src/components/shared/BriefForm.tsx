@@ -87,9 +87,14 @@ export function BriefForm({ siteKey, needs }: BriefFormProps) {
       };
 
       if (json.ok && json.delivery === "mailto" && json.fallbackHref) {
-        window.location.assign(json.fallbackHref);
-        setStatus("mailto");
-        reset();
+        // Defense-in-depth: only ever navigate to a mailto: link.
+        if (json.fallbackHref.startsWith("mailto:")) {
+          window.location.assign(json.fallbackHref);
+          setStatus("mailto");
+          reset();
+          return;
+        }
+        setStatus("error");
         return;
       }
       if (json.ok) {

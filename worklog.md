@@ -209,3 +209,31 @@ Work Log:
 
 Stage Summary:
 - Home is now a video-first cinematic hero: avatar gone, presenter loop full-bleed under a restrained dark overlay, single-column copy with the two CTAs. Day/night toggle continues to work (tokenised overlay flips with it). All quality gates green.
+
+---
+Task ID: 13 (Final review + security audit — user request)
+Agent: main agent (Z.ai)
+Task: Full pre-launch review: every button/link working and redirecting correctly, typography/spacing check, security test + fixes for vulnerabilities and inconsistencies.
+
+Work Log:
+SECURITY
+- next.config.ts hardened: removed typescript.ignoreBuildErrors (build now fails on type errors) and reactStrictMode:false -> true; added security headers to every route (X-Content-Type-Options nosniff, Referrer-Policy strict-origin-when-cross-origin, Permissions-Policy camera/microphone/geolocation=(), HSTS) plus a production-only Content-Security-Policy tuned to the site's real needs (self + Calendly assets/frame + Vercel Analytics; object-src none, base-uri self, form-action self, frame-ancestors self + *.space-z.ai preview; no unsafe-eval). Dev skips CSP so overlays/HMR keep working.
+- JSON-LD: new safeJsonLd() in lib/jsonld.ts (escapes <, U+2028, U+2029); both skill layouts now embed via safeJsonLd -> a "</script>" in any content string can never break out of the ld+json block.
+- api/brief/route.ts: 128KB payload cap before parsing (413), rate-limit Map eviction (caps at 5000 tracked IPs, drops oldest half -> no memory-DoS via spoofed X-Forwarded-For), sanitizeLine() strips CR/LF runs from the email subject/name path. Verified by live probes: invalid JSON 400, validation 400 with per-field issues, oversized 413, valid -> mailto fallback, 6th request from same IP 429.
+- BriefForm: defense-in-depth guard -> fallbackHref must start with "mailto:" before window.location.assign.
+- .env untracked from git (gitignore already covers it; contained only a local sqlite path).
+- Dependency audit (npm audit after lock regen): baseline was 24 vulnerabilities (2 critical, 14 high). Fixed by pruning 49 unused scaffold packages (dnd-kit, mdxeditor, tanstack, next-auth, next-intl, recharts, react-syntax-highlighter, prisma-adjacent chains, 25 radix packages + 43 unused ui components, use-mobile, etc.), next/eslint-config-next 16.1.1 -> 16.4.2 (all Next.js CVEs: DoS, cache poisoning, SSRF, middleware bypass, RCE paths), sharp 0.34.3 -> 0.35.5 (libvips/libheif/librsvg CVEs; generate-icons.mjs verified still working), prisma pinned ~6.12.0 (last version outside the deepmerge-ts/@prisma/config vulnerable range; kept because .zscripts boot runs db:push). Final audit: 0 vulnerabilities.
+- tsconfig excludes examples/, skills/, mini-services/, tests/ so the strict type-check covers only site code.
+FUNCTIONAL (browser-verified, agent-browser)
+- All 18 routes/assets 200 with correct content-type (5 pages, sitemap, robots, icon, apple-icon, 3 OG images, 2 CV PDFs, portrait, hero video + poster, logo); bogus path -> branded 404.
+- Home: word-reveal headline, video playing, both CTA wipes -> /product-marketing and /grants-consulting; footer mailto/wa.me/linkedin hrefs correct; ThemeToggle.
+- PMM + Grants: floating pill nav anchors (#services 1394px, #results 5928px scroll), Download CV -> correct PDF, Hire me modal opens with live Calendly iframe + fallback link, Esc closes, Home pill -> / at scrollY 0.
+- /book pages: Calendly fully renders ("30 Minute Meeting", day picker); brief form: empty submit -> per-field validation; filled submit -> API -> mailto fallback -> success panel ("Send another brief"); direct email + WhatsApp links correct.
+- Mobile 390: full-screen menu opens/closes, all items present (anchors, Hire, CV, toggle, Home), menu navigation closes + scrolls; theme persists across pages via dd-mode localStorage (verified grants -> PMM -> home).
+- Em/en-dash sweep re-verified: 0 occurrences in rendered HTML of all 5 routes.
+- Typography/spacing spot-check screenshots (final-pmm-hero-night, final-pmm-services, final-pmm-results, final-grants-hero-night, final-grants-results, final-book-pmm): pill nav, section rhythm, card alignment all consistent.
+- Gates after changes: tsc --noEmit CLEAN (strict, with excludes), bun run lint + exclusivity guard PASS (27 files), bun run build PASS 16/16 routes (type errors now build-blocking).
+
+Stage Summary:
+- Zero known npm vulnerabilities; hardened headers + CSP; XSS/JSON-LD, mailto, DoS and memory-growth vectors closed; every button, link, anchor, modal, form flow and toggle verified working in browser; typography/spacing consistent; strict type-check enforced at build.
+- Accepted residual: prisma CLI is build/dev-only (db:push in sandbox harness), pinned to a version outside all known advisory ranges; Calendly branding limits noted in README (free plan).

@@ -35,13 +35,29 @@ const SUBJECT_PREFIX: Record<BriefData["site"], string> = {
 const hits = new Map<string, number[]>();
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 60 * 60 * 1000;
+/** Upper bound on tracked IPs so the Map can never grow unbounded
+ *  (memory DoS via spoofed X-Forwarded-For values). */
+const RATE_MAX_KEYS = 5000;
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
   const recent = (hits.get(ip) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
   recent.push(now);
   hits.set(ip, recent);
+  if (hits.size > RATE_MAX_KEYS) {
+    // Map preserves insertion order: drop the oldest half.
+    for (const key of hits.keys()) {
+      hits.delete(key);
+      if (hits.size <= RATE_MAX_KEYS / 2) break;
+    }
+  }
   return recent.length > RATE_LIMIT;
+}
+
+/** Collapse CR/LF (and runs of whitespace) so user input can never
+ *  inject header breaks into the email subject line. */
+function sanitizeLine(value: string): string {
+  return value.replace(/\s+/g, " ").trim();
 }
 
 function buildBody(data: BriefData): string {
@@ -88,7 +104,7 @@ async function sendViaResend(
           process.env.BRIEF_FROM_EMAIL ?? "Detim Digital <onboarding@resend.dev>",
         to: [to],
         reply_to: data.email,
-        subject: `${SUBJECT_PREFIX[data.site]} New brief from ${data.name}`,
+        subject: `${SUBJECT_PREFIX[data.site]} New brief from ${sanitizeLine(data.name)}`,
         text: buildBody(data),
       }),
     });
@@ -99,6 +115,15 @@ async function sendViaResend(
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
+  // Refuse oversized payloads before parsing (cheap body-size cap).
+  const contentLength = Number(req.headers.get("content-length") ?? "0");
+  if (Number.isFinite(contentLength) && contentLength > 128 * 1024) {
+    return NextResponse.json(
+      { ok: false, error: "Payload too large." },
+      { status: 413 }
+    );
+  }
+
   let payload: unknown;
   try {
     payload = await req.json();
