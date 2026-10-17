@@ -16,7 +16,7 @@ export const home: HomeContent = {
   headlineSegments: [
     { text: "Hi, I'm Oluwadetimi Ajayi, a " },
     { text: "Tech Product Marketer", accent: true },
-    { text: " and a " },
+    { text: "and a " },
     { text: "Grant Expert", accent: true },
     { text: "." },
   ],

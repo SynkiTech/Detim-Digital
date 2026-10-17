@@ -44,7 +44,15 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   output: "standalone",
   reactStrictMode: true,
-  async headers() {
+  turbopack: {},
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      'motion-dom': require.resolve('motion-dom'),
+    };
+    return config;
+  },
+    async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
 };
